@@ -1,27 +1,45 @@
-body {background: white;} 
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {background: white;}
+
+.app {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 56px 1fr;
+    grid-template-areas: 
+    "header header"
+    "sidebar main";
+    height: 100vh;
+}
 
 .header {
+    grid-area: header;
     display: flex;
     justify-content: space-between;
     align-items: normal;
-    padding: 16px 16px;
+    padding: 0 16px;
     height: auto;
     background: #cfcfcf;
+    border-bottom: 1px solid #333;
 }
 
+.header-left,
 .header-center {
-    flex: 1;
     display: flex;
-    justify-content: center;
+    align-items: center;
 }
 
-.search-form {
+.header-right {
     display: flex;
-    width: 60%;
-    max-width: 600px;
+    align-items: center;
+    gap: 10px;
 }
 
-
+/* Left Header */
 .menu-bt {
     width: 32px;
     height: 32px;
@@ -38,35 +56,59 @@ body {background: white;}
 }
 
 
-/* 
-.search-button {
-    width: 26px;
-    height: 32px;
-    border: none;
-    background: url(Assets/search.svg) no-repeat center;
-    background-size: contain;
-    padding-left: 50px;
+/* Right Header */
+.register-bt{
+    padding: 0 6px;
+    
 }
 
-.search-input {
-    flex: 1;
-    width: auto;
-    height: 32px;
-    background-size: contain;
-    border: none;
-    padding: 8px;
-    border-radius: 20px 20px 20px 20px;
-} */
-
-.account-bt {
-    width: 32px;
-    height: 32px;
+.avatar-bt {
+    width: 42px;
+    height: 42px;
     border: none;
     border-radius: 50%;
     background-color: blue;
     color: white;
+    margin-left: 20px;
 }
 
-.account-bt:hover {
+.avatar-bt:hover {
     background-color: darkblue;
+}
+
+.overlay-box {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: #e8e8e8;
+    border: 1px solid #333;
+    min-width: 80px;
+
+}
+
+
+
+/* SideBar */
+#sidebar {
+    display: none;
+}
+
+aside {
+    grid-area: sidebar;
+    background: #f2f2f2;
+    padding: 16px;
+}
+
+.nav a{
+    display: block;
+    padding: 10px;
+    border-radius: 10px;
+    color: black;
+    text-decoration: none;
+}
+
+.nav :hover{
+    background: blue;
+    color: white;
 }

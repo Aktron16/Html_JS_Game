@@ -7,26 +7,51 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class ="header">
-        <div class ="header-left">
-            <button class="menu-bt"></button>
-            <a class = "youtube-logo">
-                <img src = "Assets/Youtube_logo.png" alt = "youtube_logo">
-            </a>
-        </div>
-        <!-- <div class="header-center">
-            <form action="#" class = "search-form">
-                <input type = "search" placeholder="Search" required class="search-input">
-                <button class="search-button" ></button>
-            </form>
-        </div> -->
+    <div class="app">        
+        <!-- The Top Header -->
+        <header class ="header">
+            <!-- Left Side -->
+            <div class ="header-left">
+                <!-- This is the sidebar button -->
+                <button class="menu-bt" id="menuBtn" onclick="ToggleSideBar()"></button>
+                <!-- The Logo -->
+                <a class = "youtube-logo">
+                    <img src = "Assets/Youtube_logo.png" alt = "youtube_logo">
+                </a>
+            </div>
+            <!-- Center -->
+            <!-- <div class="header-center">
+                <form action="#" class = "search-form">
+                    <input type = "search" placeholder="Search" required class="search-input">
+                    <button class="search-button" ></button>
+                </form>
+            </div> -->
+            <!-- Right Side -->
+            <div class="header-right">
+                <!-- Log-in Button -->
+                <button class="register-bt">Register</button>
+                <!-- Register Button -->
+                <button class="login-bt">Login</button>
+                <!-- Avatar profile pic -->
+                <button class="avatar-bt" id="avatarBtn" onclick="ToggleSignOutBox()"></button>
 
-        <div class="header-right">
-            <button class="log-in-bt"></button>
-            <button class="sign-in-bt"></button>
-            <button class="account-bt"></button>
-        </div>
-    </header>
+                <!-- Overlay Sign Out Box -->
+                <div class="overlay-box" id="overlayBox">
+                <p>Signed in as <b>User</b></p>
+                <button id="signoutBtn">Sign Out</button>
+                </div>
+            </div>
+        </header>
+
+        <aside id="sidebar">
+            <nav class="nav">
+                <a href="#">Game</a>
+                <a href="#">Leaderboard</a>
+                <a href="#">Register</a>
+                <a href="#">Login</a>
+            </nav>
+        </aside>
+    </div>
 <script src = "script.js"></script>
 </body>
 </html>
