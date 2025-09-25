@@ -1,0 +1,28 @@
+.menu-bt {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: url(Assets/menu-bar.svg) no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+}
+
+.youtube-logo img {
+    height: 32px;
+    background-size: contain;
+    border: none;
+}
+
+.search-button {
+    width: 32px;
+    height: 32px;
+    background: url(Assets/search.svg) no-repeat center;
+    background-size: contain;
+}
+
+.search-input {
+    width: auto;
+    height: 32px;
+    background-size: contain;
+    
+}
