@@ -19,22 +19,15 @@
                     <img src = "Assets/Youtube_logo.png" alt = "youtube_logo">
                 </a>
             </div>
-            <!-- Center -->
-            <!-- <div class="header-center">
-                <form action="#" class = "search-form">
-                    <input type = "search" placeholder="Search" required class="search-input">
-                    <button class="search-button" ></button>
-                </form>
-            </div> -->
             
             <!-- Right Side -->
             <div class="header-right">
                 <!-- Game Button-->
-                <button class="game-bt"><span>Game</span></button>
+                <button class="header-bt" id="gameBtn"><span>Game</span></button>
                 <!-- Leaderboards Button -->
-                <button class="leaderboards-bt"><span>Leaderboards</span></button>
+                <button class="header-bt" id="leaderboardsBtn"><span>Leaderboards</span></button>
                 <!-- Login and Register Button -->
-                <button class="login-register-bt"><span>Login / Register</span></button>
+                <button class="header-bt" id="login-register-Btn"><span>Login / Register</span></button>
                 <!-- Avatar profile pic -->
                 <button class="avatar-bt" id="avatarBtn" onclick="ToggleSignOutBox()"></button>
 
@@ -46,6 +39,7 @@
             </div>
         </header>
 
+        <!-- Sidebar -->
         <aside id="sidebar">
             <nav class="nav">
                 <a href="#">Game</a>
@@ -53,7 +47,36 @@
                 <a href="#">Login / Register</a>
             </nav>
         </aside>
+
+        <!-- The Main Login / Register Box -->
+        <div class="login-register-box" id="loginBox">
+            <h2 class="welcome">Welcome</h2>
+            <!-- The Form -->
+            <form id="user-form">
+                <!-- Nickname input -->
+                <label class="user-form-labels">Nickname:</label>
+                <input type="text" name="nickname" id="nickname" placeholder="Nickname..."/>
+                <br>
+                <!-- Email Input -->
+                <label class="user-form-labels">Email-ID:</label>
+                <input type="email" name="email" id="email-id" placeholder="Email-ID..." required/>
+                <br>
+                <!-- Password Input -->
+                <label class="user-form-labels">Password:</label>
+                <input type="password" name="password" id="password" placeholder="Password..." required/>
+                <br><br>
+                <!-- Feedback -->
+                <label id="feedback"></label>
+                <br>
+                <!-- Submit Button -->
+                <button type="submit" id="loginBtn">Login</button>
+                <br>
+                <button type="submit" id="registerBtn">Register</button>
+            </form>
+
+        </div>
     </div>
-<script src = "script.js"></script>
+<script src = "JS_files/script.js"></script>
+<script src="JS_files/credentials.js"></script>
 </body>
 </html>

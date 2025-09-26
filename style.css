@@ -68,37 +68,33 @@ body {
 
 
 /* Right Header */
-.login-register-bt, .game-bt, .leaderboards-bt{
+.header-bt{
     border: none;
     background-color: #cfcfcf;
     padding: 0 6px;
 }
 
-.login-register-bt span,
-.game-bt span,
-.leaderboards-bt span{
+.header-bt span{
     display: inline-block;
     font-weight: bold;  
     transition: transform 0.2s ease, text-shadow 0.2s ease;
 }
 
-.login-register-bt:hover span,
-.game-bt:hover span,
-.leaderboards-bt:hover span {
+.header-bt:hover span {
     transform: translate(-1px,-2px);
     text-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
 }
 
 @media (max-width: 510px) {
-    .game-bt {display: none;}
+    #gameBtn {display: none;}
 }
 
 @media (max-width: 465px) {
-    .leaderboards-bt {display: none;}
+    #leaderboardsBtn {display: none;}
 }
 
 @media(max-width: 345px){
-    .login-register-bt {display: none;}
+    #login-register-Btn {display: none;}
 }
 
 
