@@ -1,15 +1,12 @@
 const menuBtn = document.getElementById("menuBtn");
 const sidebar = document.getElementById("sidebar");
+const app = document.querySelector(".app")
 
 const avatar = document.getElementById("avatarBtn");
 const overlayBox = document.getElementById("overlayBox");
 
 function ToggleSideBar(){
-    if (sidebar.style.display === "none"){
-        sidebar.style.display = "block";
-    } else {
-        sidebar.style.display = "none";
-    }
+    app.classList.toggle("sidebar-open");
 };
 
 function ToggleSignOutBox(){

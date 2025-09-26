@@ -4,11 +4,14 @@
     box-sizing: border-box;
 }
 
-body {background: white;}
+body {
+    background: white;
+    user-select: none;
+}
 
 .app {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: auto 1fr;
     grid-template-rows: 56px 1fr;
     grid-template-areas: 
     "header header"
@@ -47,6 +50,14 @@ body {background: white;}
     background: url(Assets/menu-bar.svg) no-repeat center;
     background-size: contain;
     cursor: pointer;
+    box-shadow: none;
+    margin-right: 20px;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.menu-bt:hover{
+    transform: translate(-1px, -2px);
+    box-shadow: 0 2px 4px 0 #333;
 }
 
 .youtube-logo img {
@@ -57,9 +68,25 @@ body {background: white;}
 
 
 /* Right Header */
-.register-bt{
+.login-register-bt, .game-bt, .leaderboards-bt{
+    border: none;
+    background-color: #cfcfcf;
     padding: 0 6px;
-    
+}
+
+.login-register-bt span,
+.game-bt span,
+.leaderboards-bt span{
+    display: inline-block;
+    font-weight: bold;  
+    transition: transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+.login-register-bt:hover span,
+.game-bt:hover span,
+.leaderboards-bt:hover span {
+    transform: translate(-1px,-2px);
+    text-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
 }
 
 .avatar-bt {
@@ -91,24 +118,37 @@ body {background: white;}
 
 /* SideBar */
 #sidebar {
-    display: none;
-}
-
-aside {
     grid-area: sidebar;
     background: #f2f2f2;
-    padding: 16px;
+    width: 200px;
+    transform: translateX(-100%);
+    max-width: 200px;
+    padding-left: 0;
+    padding-top: 16px;
+    transition: transform 0.5s ease-in-out
+    , padding-left 0.5s ease-in-out;
+    overflow: hidden;
+    border-right: solid #e0e0e0;
 }
+
+.app.sidebar-open #sidebar {
+    transform: translateX(0);
+    padding-left: 10px;
+}
+
 
 .nav a{
     display: block;
     padding: 10px;
+    margin-bottom: 10px;
     border-radius: 10px;
     color: black;
     text-decoration: none;
+    border: black;
 }
 
 .nav :hover{
-    background: blue;
+    background: black;
     color: white;
+    font-weight: bold;
 }
