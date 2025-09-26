@@ -89,6 +89,19 @@ body {
     text-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
 }
 
+@media (max-width: 510px) {
+    .game-bt {display: none;}
+}
+
+@media (max-width: 465px) {
+    .leaderboards-bt {display: none;}
+}
+
+@media(max-width: 345px){
+    .login-register-bt {display: none;}
+}
+
+
 .avatar-bt {
     width: 42px;
     height: 42px;
@@ -103,18 +116,47 @@ body {
     background-color: darkblue;
 }
 
-.overlay-box {
-    display: none;
+#overlayBox {
     position: absolute;
-    top: 60px;
+    top: 70px;
     right: 20px;
     background: #e8e8e8;
     border: 1px solid #333;
     min-width: 80px;
+    min-height: 60px;
+    height: 80px;
+    width: 150px;
+    box-shadow: 0 2px 4px 0 #333;
+    border-radius: 8px;
+
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
 }
 
+#overlayBox p{
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 5px;
+}
 
+#overlayBox.active {
+    display: flex;
+}
+
+.signout-bt {
+    padding: 5px;
+    background: #cfcfcf;
+    border: 1px solid #b4b4b4;
+    border-radius: 6px 8px;
+}
+
+.signout-bt:hover {
+    transform: translateY(2px);
+    box-shadow: inset 0 2px 3px 0 #333;
+}
 
 /* SideBar */
 #sidebar {

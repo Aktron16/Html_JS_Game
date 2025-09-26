@@ -1,5 +1,3 @@
-const menuBtn = document.getElementById("menuBtn");
-const sidebar = document.getElementById("sidebar");
 const app = document.querySelector(".app")
 
 const avatar = document.getElementById("avatarBtn");
@@ -10,9 +8,5 @@ function ToggleSideBar(){
 };
 
 function ToggleSignOutBox(){
-    if (overlayBox.style.display === "none"){
-        overlayBox.style.display = "block";
-    } else {
-        overlayBox.style.display = "none";
-    }
+    overlayBox.classList.toggle('active');
 };
