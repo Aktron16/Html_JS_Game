@@ -42,36 +42,37 @@
         <!-- Sidebar -->
         <aside id="sidebar">
             <nav class="nav">
-                <a href="#">Game</a>
-                <a href="#">Leaderboards</a>
-                <a href="#">Login / Register</a>
+                <a class="sidebar-bt" href="#"><span>Game</span></a><br>
+                <a class="sidebar-bt" href="#"><span>Leaderboards</span></a><br>
+                <a class="sidebar-bt" href="#"><span>Login / Register</span></a>
             </nav>
         </aside>
 
         <!-- The Main Login / Register Box -->
-        <div class="login-register-box" id="loginBox">
+        <div id="loginBox">
             <h2 class="welcome">Welcome</h2>
+            <br>
             <!-- The Form -->
             <form id="user-form">
                 <!-- Nickname input -->
                 <label class="user-form-labels">Nickname:</label>
-                <input type="text" name="nickname" id="nickname" placeholder="Nickname..."/>
+                <input class="form-input" type="text" name="nickname" id="nickname" placeholder="Nickname..."/>
                 <br>
                 <!-- Email Input -->
                 <label class="user-form-labels">Email-ID:</label>
-                <input type="email" name="email" id="email-id" placeholder="Email-ID..." required/>
+                <input class="form-input" type="email" name="email" id="email-id" placeholder="Email-ID..." required/>
                 <br>
                 <!-- Password Input -->
                 <label class="user-form-labels">Password:</label>
-                <input type="password" name="password" id="password" placeholder="Password..." required/>
+                <input class="form-input" type="password" name="password" id="password" placeholder="Password..." required/>
                 <br><br>
                 <!-- Feedback -->
                 <label id="feedback"></label>
                 <br>
                 <!-- Submit Button -->
-                <button type="submit" id="loginBtn">Login</button>
+                <button class="submit-bt" type="submit" id="loginBtn">Login</button>
                 <br>
-                <button type="submit" id="registerBtn">Register</button>
+                <button class="submit-bt" type="submit" id="registerBtn">Register</button>
             </form>
 
         </div>
