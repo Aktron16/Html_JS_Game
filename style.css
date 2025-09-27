@@ -53,6 +53,7 @@ body {
     grid-area: main;
     display: flex;
     flex-direction: column;
+    justify-self: center;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -64,7 +65,7 @@ body {
     background: #cfcfcf;
     border: 1px solid #c2c2c2;
     box-shadow: 0 5px 10px 0 #333;
-    margin: 50px 20% 50px 20% ;
+    margin: 50px 10% 50px 10% ;
 }
 
 .welcome {
@@ -88,6 +89,40 @@ body {
     margin: 0 0 10px 10px;
     align-self: center;
     text-align: left;
+}
+
+#feedback {
+    font-weight: bold;
+    margin: 20px;
+    padding-bottom: 10px;
+    height: 30px;
+    align-self: center;
+    text-align: center;
+    background: linear-gradient(
+        90deg,
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        indigo,
+        violet
+    );
+    color: transparent;
+    background-clip: text;
+    background-size: 400% 100%;
+    animation: rainbowFlow 5s linear infinite;
+}
+
+@keyframes rainbowFlow {
+    0% {background-position-x: 0%;}
+    100% {background-position-x: 100%;}
+}
+
+#feedback:empty {
+    background: none;
+    color: inherit;
+    animation: none;
 }
 
 .submit-bt {
@@ -256,4 +291,70 @@ body {
 .sidebar-bt:hover span {
     transform: translate(-1px, -2px);
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+
+/* Game Css */
+
+.game-screen {
+    display: block;
+    grid-area: main;
+
+    position: relative;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 800px;
+    height: 600px;
+    background-color: rgb(201, 201, 201);
+    border: 2px solid black;
+    overflow: hidden;
+}
+
+.hud {
+    display: inline-flex;
+    padding: 10px;
+    border-radius: 20%;
+    margin: 0 10px 0 0;
+    border: #333;
+    background-color: #969696;
+}
+
+#player {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: blue;
+    border-radius: 5px;
+}
+
+
+/* Game End / Pause Screen */
+#game-end-pause {
+    display: none;
+    background: rgba(0,0,0,0.3);
+    text-align: center;
+    justify-items: center;
+    align-items: center;
+}
+
+#end-pause-text {
+    align-self: center;
+    justify-self: center;
+    margin-top: 25%;
+    font-size: 90px;
+    color: red;
+}
+
+.game-pause-bt {
+    width: 200px;
+    height: 50px;
+    font-size: 25px;
+    margin: 10px;
+}
+
+.game-pause-bt:hover {
+    background-color: green;
+    box-shadow: 0 2px 4px rgba(1, 150, 1, 0.5);
 }

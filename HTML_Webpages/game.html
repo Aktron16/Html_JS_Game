@@ -47,7 +47,20 @@
                 <a class="sidebar-bt" href="index.html"><span>Login / Register</span></a>
             </nav>
         </aside>
+
+        <div class="game-screen" id="gameScreen">
+            <p class="hud" id="score">Score: 0</p>
+            <p class="hud" id="health">Health: </p>
+            <div id="player"></div>
+        </div>
+        <div class="game-screen" id="game-end-pause">
+            <p id="end-pause-text">Game Over</p>
+            <br>
+            <button class="game-pause-bt" id="resume" onclick="ResumeGame()">Resume</button>
+            <button class="game-pause-bt" id="retry">Retry</button>
+        </div>
     </div>
 <script src = "../JS_files/script.js"></script>
+<script src = "../JS_files/game.js"></script>
 </body>
 </html>
