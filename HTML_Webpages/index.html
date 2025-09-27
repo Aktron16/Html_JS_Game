@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youtube Clone</title>
-    <link rel="stylesheet" href="style.css">
+    <title>HTML JavaScript Game</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <div class="app">        
@@ -15,19 +15,19 @@
                 <!-- This is the sidebar button -->
                 <button class="menu-bt" id="menuBtn" onclick="ToggleSideBar()"></button>
                 <!-- The Logo -->
-                <a class = "youtube-logo">
-                    <img src = "Assets/Youtube_logo.png" alt = "youtube_logo">
+                <a class = "youtube-logo" href="">
+                    <img src = "../Assets/Youtube_logo.png" alt = "youtube_logo">
                 </a>
             </div>
             
             <!-- Right Side -->
             <div class="header-right">
                 <!-- Game Button-->
-                <button class="header-bt" id="gameBtn"><span>Game</span></button>
+                <a class="header-bt" id="gameBtn" href="game.html"><span>Game</span></a>
                 <!-- Leaderboards Button -->
-                <button class="header-bt" id="leaderboardsBtn"><span>Leaderboards</span></button>
+                <a class="header-bt" id="leaderboardsBtn" href="leaderboards.html"><span>Leaderboards</span></a>
                 <!-- Login and Register Button -->
-                <button class="header-bt" id="login-register-Btn"><span>Login / Register</span></button>
+                <a class="header-bt" id="login-register-Btn" href=""><span>Login / Register</span></a>
                 <!-- Avatar profile pic -->
                 <button class="avatar-bt" id="avatarBtn" onclick="ToggleSignOutBox()"></button>
 
@@ -42,9 +42,9 @@
         <!-- Sidebar -->
         <aside id="sidebar">
             <nav class="nav">
-                <a class="sidebar-bt" href="#"><span>Game</span></a><br>
-                <a class="sidebar-bt" href="#"><span>Leaderboards</span></a><br>
-                <a class="sidebar-bt" href="#"><span>Login / Register</span></a>
+                <a class="sidebar-bt" href="game.html"><span>Game</span></a><br>
+                <a class="sidebar-bt" href="leaderboards.html"><span>Leaderboards</span></a><br>
+                <a class="sidebar-bt" href=""><span>Login / Register</span></a>
             </nav>
         </aside>
 
@@ -55,19 +55,19 @@
             <!-- The Form -->
             <form id="user-form">
                 <!-- Nickname input -->
-                <label class="user-form-labels">Nickname:</label>
+                <label class="user-form-labels" for="nickname">Nickname:</label>
                 <input class="form-input" type="text" name="nickname" id="nickname" placeholder="Nickname..."/>
                 <br>
                 <!-- Email Input -->
-                <label class="user-form-labels">Email-ID:</label>
+                <label class="user-form-labels" for="email-id">Email-ID:</label>
                 <input class="form-input" type="email" name="email" id="email-id" placeholder="Email-ID..." required/>
                 <br>
                 <!-- Password Input -->
-                <label class="user-form-labels">Password:</label>
+                <label class="user-form-labels" for="password">Password:</label>
                 <input class="form-input" type="password" name="password" id="password" placeholder="Password..." required/>
                 <br><br>
                 <!-- Feedback -->
-                <label id="feedback"></label>
+                <span id="feedback"></span>
                 <br>
                 <!-- Submit Button -->
                 <button class="submit-bt" type="submit" id="loginBtn">Login</button>
@@ -77,7 +77,7 @@
 
         </div>
     </div>
-<script src = "JS_files/script.js"></script>
-<script src="JS_files/credentials.js"></script>
+<script src = "../JS_files/script.js"></script>
+<script src="../JS_files/credentials.js"></script>
 </body>
 </html>
