@@ -2,8 +2,9 @@ const app = document.querySelector(".app")
 
 const avatar = document.getElementById("avatarBtn");
 const overlayBox = document.getElementById("overlayBox");
+const user_nickname = document.getElementById("user-nickname");
 
-let User_Logged_in = JSON.parse(localStorage.getItem('User_Logged_in')) || [];
+let User_Logged_in = JSON.parse(localStorage.getItem('User_Logged_in')) || null;
 const logged = checkLoggedin()
 
 function ToggleSideBar(){
@@ -17,6 +18,7 @@ function ToggleSignOutBox(){
 function LoggedIn() {
     if (logged) {
         avatar.style.display = 'flex';
+        user_nickname.textContent = User_Logged_in._nickname;
     } else if (!logged) {
         avatar.style.display = 'none';
     };
@@ -34,7 +36,7 @@ function Signout() {
 }
 
 function checkLoggedin() {
-    return User_Logged_in.length > 0;
+    return User_Logged_in !== null;
 }
 
 document.addEventListener('DOMContentLoaded', LoggedIn);

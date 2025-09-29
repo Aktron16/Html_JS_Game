@@ -4,7 +4,7 @@ const registerBtn = document.getElementById('registerBtn');
 const feedback = document.getElementById('feedback');
 
 
-let user_current = JSON.parse(localStorage.getItem('User_Logged_in')) || [];
+let user_current = JSON.parse(localStorage.getItem('User_Logged_in')) || null;
 let users = JSON.parse(localStorage.getItem('credentials')) || [];
 
 function OnRegisterClick(){
@@ -71,20 +71,15 @@ function OnLoginClick(){
 };
 
 function currentUser(nickname , email , highscore){
-    const current_User = {
-        _nickname: nickname,
-        _emailID: email,
-        _highscore: highscore
-    };
-
-    if (checkCurrentUser()) {
-        user_current.push(current_User);
-        localStorage.setItem('User_Logged_in', JSON.stringify(user_current));
-    } else return;
+    localStorage.setItem('User_Logged_in', JSON.stringify({
+    _nickname: nickname,
+    _emailID: email,
+    _highscore: highscore
+    }));
 };
 
 function checkCurrentUser() {
-    return user_current.length === 0;
+    return user_current === null;
 }
 
 loginBtn.addEventListener('click',function(onclick) {
