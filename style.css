@@ -230,7 +230,8 @@ body {
 }
 
 
-.avatar-bt {
+#avatarBtn {
+    display: flex;
     width: 42px;
     height: 42px;
     border: none;
@@ -239,7 +240,7 @@ body {
     margin-left: 20px;
 }
 
-.avatar-bt:hover {
+#avatarBtn:hover {
     background-color: var(--color-avatar-hover);
 }
 

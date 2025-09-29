@@ -4,13 +4,16 @@ const registerBtn = document.getElementById('registerBtn');
 const feedback = document.getElementById('feedback');
 
 
+let user_current = JSON.parse(localStorage.getItem('User_Logged_in')) || [];
+let users = JSON.parse(localStorage.getItem('credentials')) || [];
+
 function OnRegisterClick(){
-    let users = JSON.parse(localStorage.getItem('credentials')) || [];
 
     const credentials= {
         nickname: form.nickname.value,
         email: form.email.value,
-        password: form.password.value
+        password: form.password.value,
+        high_score: 0
     };
 
     if (!credentials.nickname || !credentials.email || !credentials.password){
@@ -35,14 +38,13 @@ function OnRegisterClick(){
 };
 
 function OnLoginClick(){
-    const credential_check = JSON.parse(localStorage.getItem('credentials'));
 
-    if (!credential_check){
+    if (users.length === 0){
         alert('Add a user first...');
         return;
     }
 
-    const user = credential_check.find(u => u.email === form.email.value);
+    const user = users.find(u => u.email === form.email.value);
 
     if (!user){
         feedback.textContent = "Your Email-ID is Invalid\n(or) Doesn't Exist in the Database.\nPlease Register.";
@@ -50,15 +52,40 @@ function OnLoginClick(){
         return;
     }
 
-    if (user.password === form.password.value){
-        alert(`Welcome, ${user.nickname}!`);
-        location.reload();
+    if (user.password === form.password.value) {
+        if (checkCurrentUser()) {
+            currentUser(user.nickname , user.email, user.high_score);
+            alert(`Welcome, ${user.nickname}!`);
+            location.reload();
+        } else {
+            feedback.textContent = "Please Signout before Logging-In"
+            setTimeout(() => feedback.textContent = "", 3000);
+            return;
+        }
+        
     } else {
         feedback.textContent = "Your Password is Invalid.";
         setTimeout(() => feedback.textContent = "", 3000);
         return;
     }
 };
+
+function currentUser(nickname , email , highscore){
+    const current_User = {
+        _nickname: nickname,
+        _emailID: email,
+        _highscore: highscore
+    };
+
+    if (checkCurrentUser()) {
+        user_current.push(current_User);
+        localStorage.setItem('User_Logged_in', JSON.stringify(user_current));
+    } else return;
+};
+
+function checkCurrentUser() {
+    return user_current.length === 0;
+}
 
 loginBtn.addEventListener('click',function(onclick) {
     onclick.preventDefault();
