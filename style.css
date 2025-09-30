@@ -338,16 +338,17 @@ body {
 
 #game {
     grid-area: main;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
 }
 
 .game-screen {
     display: flex;
     flex-direction: column;
-    justify-self: center;
-    align-items: center;
     position: absolute;
-    margin: auto;
-    margin-top: 5%;
+    margin-top: 80px;
     width: 800px;
     height: 600px;
     background-color: white;
@@ -388,7 +389,6 @@ body {
     display: flex;
     flex-direction: column;
     text-align: center;
-    justify-items: center;
     justify-content: center;
     align-items: center;
     z-index: 5;
