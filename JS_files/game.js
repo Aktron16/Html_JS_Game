@@ -8,6 +8,7 @@ const healthDisp = document.getElementById("health");
 // World Dimensions
 const World = {w: 6400 , h: 6400};
 const gridSize = 64;
+let grassMap = [];
 const camView = {w: innerWidth, h: innerHeight, x:0,y:0};
 
 const grassBlockPaths = [
@@ -212,17 +213,33 @@ class GemManager {
     };
 };
 
-function randGrassBlock() {
-    if (grassBlocks.length === 0) {
-        console.log("There are no Grass Assets.");
-        return null;
-    } ;
+function generateGrassMap() {
+    for (let y = 0; y < Math.ceil(World.h/gridSize); y++) {
+        let row = []
+        for (let x = 0; x < Math.ceil(World.w/gridSize); x++) {
+            const randrow = Math.floor(Math.random() * grassBlocks.length);
+            row.push(grassBlocks[randrow]);
+        };
+        grassMap.push(row);
+    };
+    console.log("Grass Map Generated");
+};
 
-    let randblock = grassBlocks[Math.floor(Math.random() * grassBlocks.length)];
-    if (randblock.complete) return randblock;
-
-    console.log("Grass Blocks not Loading.");
-    return null;
+function drawGrassMap() {
+    const startX = Math.floor(camView.x / gridSize);
+    const startY = Math.floor(camView.y / gridSize);
+    const visibleCols = Math.ceil(camView.w / gridSize) + 1;
+    const visibleRows = Math.ceil(camView.h / gridSize) + 1;
+    for (let y = 0; y < visibleRows; y++){
+        for (let x = 0; x < visibleCols; x++) {
+            context.drawImage(
+                grassMap[y][x]
+                ,toScreenX((startX + x) * gridSize)
+                ,toScreenY((startY + y) * gridSize)
+                ,gridSize
+                ,gridSize);
+        };
+    };
 };
 
 function drawBgGrid() {
@@ -249,13 +266,6 @@ function drawBgGrid() {
     };
 };
 
-function drawGrassGrid() {
-    for (let y = 0; y < camView.h; y += gridSize){
-        for (let x = 0; x < camView.w; x += gridSize) {
-            context.drawImage(randGrassBlock(),x,y,gridSize,gridSize);
-        };
-    };
-};
 
 // Function to Pause the Game
 function PauseGame() {
@@ -296,13 +306,14 @@ function loop(now) {
     spawngems.update(player);
     updateCamera();
     
-    drawGrassGrid();
+    drawGrassMap();
     drawBgGrid();
     spawngems.draw();
     player.draw();
 
     requestAnimationFrame(loop);
 };
+generateGrassMap();
 requestAnimationFrame(loop);
 
 healthDisp.textContent = "Health : " + player.health;
