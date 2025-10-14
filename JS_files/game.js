@@ -226,24 +226,21 @@ function generateGrassMap() {
 };
 
 function drawGrassMap() {
-    const startX = Math.floor(camView.x / gridSize);
-    const startY = Math.floor(camView.y / gridSize);
-    const visibleCols = Math.ceil(camView.w / gridSize) + 1;
-    const visibleRows = Math.ceil(camView.h / gridSize) + 1;
-    for (let y = 0; y < visibleRows; y++){
-        for (let x = 0; x < visibleCols; x++) {
+    for (let x = 0; x < World.w; x += gridSize) {
+        for (let y = 0; y < World.h; y += gridSize) {
             context.drawImage(
-                grassMap[y][x]
-                ,toScreenX((startX + x) * gridSize)
-                ,toScreenY((startY + y) * gridSize)
-                ,gridSize
-                ,gridSize);
+                grassMap[Math.floor(x/gridSize)][Math.floor(y/gridSize)],
+                toScreenX(x),
+                toScreenY(y),
+                gridSize,
+                gridSize
+            );
         };
     };
 };
 
 function drawBgGrid() {
-    context.strokeStyle = "#1a1a1a";
+    context.strokeStyle = "#4a893eff";
     context.lineWidth = 1;
 
     const startX = Math.floor(camView.x / gridSize) * gridSize;

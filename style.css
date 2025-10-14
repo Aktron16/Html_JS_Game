@@ -47,14 +47,10 @@ body {
     grid-template-columns: auto 1fr;
     grid-template-rows: 56px 1fr;
     height: 100vh;
+    width: 100vw;
+    overflow: hidden;
 }
 
-.app > [grid-area="main"],
-.app main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .header {
     grid-area: header;
@@ -63,6 +59,7 @@ body {
     align-items: normal;
     padding: 0 16px;
     height: auto;
+    width: 100vw;
     background: var(--color-header-bg);
     border: 2px solid var(--color-bg);
 }
@@ -303,14 +300,14 @@ body {
     ,width 0.5s ease;
     overflow: hidden;
     border: 2px solid var(--color-bg);
-    grid-template-columns: 1fr;
+    z-index: 1;
+    float: left;
 }
 
 .app.sidebar-open #sidebar {
     transform: translateX(0);
     width: 200px;
     padding-left: 10px;
-    grid-template-columns: 200px 1fr;
 }
 
 .sidebar-bt, .sidebar-bt span {
@@ -348,38 +345,31 @@ body {
 
 .game-screen {
     display: flex;
-    margin-top: 15px;
+    margin: 5px;
     width: 90vw;
-    height: 80vh;
+    height: 90vh;
     border: 2px solid var(--color-accent);
 }
 
 
 /* HUD */
 #hudDiv {
-    margin-top: 2%;
+    position: absolute;
+    float: top;
+    margin-top: 20px;
     justify-self: center;
-    align-self: normal;
+    align-self: center;
     text-align: center;
+    z-index: 5;
 }
 
 .hud {
     display: inline-flex;
     padding: 10px;
     border-radius: 5px;
-    background-color: #969696;
-    color: rgb(114, 226, 114);
+    background-color: rgba(0,0,0,0.3);
+    color: rgba(255, 255, 255, 0.6);
 }
-
-#player {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border: none;
-    background: blue;
-    border-radius: 5px;
-}
-
 
 /* Game End / Pause Screen */
 #game-end-pause {
