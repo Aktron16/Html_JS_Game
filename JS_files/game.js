@@ -32,6 +32,7 @@ let gameEnded = false;
 const Clamp = (v,min,max) => Math.max(min,Math.min(max,v));
 const toScreenX = x => Math.floor(x - camView.x);
 const toScreenY = y => Math.floor(y - camView.y);
+const randomChoice = (...choices) => choices[Math.floor(Math.random()*choices.length)];
 
 
 // Resizing the Window
@@ -54,7 +55,7 @@ function updateCamera() {
 let keys = new Set();
 document.addEventListener("keydown" , e => {
     keys.add(e.key.toLowerCase());
-    if (e.key === 'Escape') PauseGame();
+    if (e.key === 'Escape') TogglePauseGame();
 });
 
 document.addEventListener("keyup", e => {
@@ -89,6 +90,10 @@ class Player {
             healthDisp.textContent = "Health : " + this._health;
         };
     };
+
+    dmgPlayer(dmg) {
+        this.health -= dmg;
+    }
 
     get score() {
         return this._score;
@@ -139,6 +144,82 @@ class Player {
     };
 };
 
+class Enemies {
+    constructor (x, y, w, h, baseSpeed, damage, color) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.baseSpeed = baseSpeed;
+        this.damage = damage;
+        this.color = color;
+        this.attacked = false;
+    };
+
+    followPlayer(dt, player) {
+        const dx = player.x - this.x;
+        const dy = player.y - this.y;
+        const dist = Math.hypot(dx,dy);
+
+        if (dist > 0) {
+            this.x += (dx / dist) * this.baseSpeed * dt;
+            this.y += (dy / dist) * this.baseSpeed * dt;
+        }
+        this.x = Clamp(this.x , 0 , World.w - this.w);
+        this.y = Clamp(this.y, 0, World.h - this.h);
+    };
+
+    draw() {
+        if (this.attacked) return;
+
+        context.fillStyle = this.color;
+        context.fillRect(toScreenX(this.x),toScreenY(this.y),this.w,this.h);
+    };
+
+    checkCollision(player) {
+        if (this.attacked) return false;
+
+        if (player.collisionDetection(this)) {
+            player.dmgPlayer(this.damage);
+            this.attacked = true;
+            return true;
+        };
+    };
+
+    isColliding(obj) {
+        return !( //Only returns true if any one of them is false
+            this.x + this.w < obj.x || //Checks if the object at the right of the player is colliding
+            this.x > obj.x + obj.w || //Checks if the object at the left of the player is colliding
+            this.y + this.h < obj.y || //Checks if the object at the botton of the player is colliding
+            this.y > obj.y + obj.h //Checks if the object at the top of the player is colliding
+        );
+    };
+
+    enemyAvoidance(enemies) {
+        for (let other of enemies) {
+            if (other === this) continue;
+
+            if (this.isColliding(other)) {
+                const dx = this.x - other.x;
+                const dy = this.y - other.y;
+                const dist = Math.hypot(dx,dy) || 0.1;
+
+                const minDist = (this.w + other.w) / 2;
+
+                if (dist < minDist) {
+                    const overlap = minDist - dist;
+
+                    this.x += (dx / dist) * (overlap / 2);
+                    this.x += (dy / dist) * (overlap / 2);
+                    other.x -= (dx / dist) * (overlap / 2);
+                    other.x -= (dy / dist) * (overlap / 2);
+                };
+            };
+        };
+    };
+};
+
+// The Gem Component
 class Gem {
     constructor(x, y) {
         this.x = x;
@@ -181,35 +262,69 @@ class Gem {
     };
 };
 
-class GemManager {
-    constructor(amt) {
+// The Game Manager (Spanws the Gems, Enemies)
+class GameManager {
+    constructor(thing, amt) {
         this.gems = [];
+        this.enemies = [];
         this.amt = amt;
-        this.spawnall();
+        this.thing = thing;
+        this.spawnall(this.thing);
     };
 
-    spawnall() {
-        for (let i=0; i < this.amt; i++) {this.spawnone()};
+    spawnall(obj) {
+        for (let i=0; i < this.amt; i++) {
+            if (obj == 'enemy') { 
+                this.spawnone(randomChoice('enemy1','enemy2','enemy3'));
+            } else {
+                this.spawnone(obj);
+            };
+        };
     };
 
-    spawnone() {
-        const randx = Math.random() * (World.w - 30);
-        const randy = Math.random() * (World.h - 30);
-        this.gems.push(new Gem(randx,randy));
+    spawnone(obj) {
+        const randx = Math.random() * (World.w - 50);
+        const randy = Math.random() * (World.h - 50);
+
+        if (obj == 'gems') {
+            this.gems.push(new Gem(randx,randy));
+        } else if (obj == 'enemy1') {
+            // This is the normal Enemy.
+            this.enemies.push(new Enemies(randx,randy,30,30,125,5,'#ff0000ff'));
+        } else if (obj == 'enemy2') {
+            // This is the Fast Enemy.
+            this.enemies.push(new Enemies(randx,randy,15,15,200,1,'#ffc400ff'));
+        } else if (obj == 'enemy3') {
+            // This is the Slow Enemy.
+            this.enemies.push(new Enemies(randx,randy,45,45,90,10,'#00ff00ff'));
+        }
     };
 
     update(player) {
         this.gems.forEach(gem => { 
             if (gem.checkCollected(player)) {
-                this.spawnone();
+                this.spawnone('gems');
             };
         });
 
+        this.enemies.forEach(enemy => {
+            if (enemy.checkCollision(player)) {
+                this.spawnone(randomChoice('enemy1','enemy2','enemy3'));
+            };            
+        });
+
+        this.enemies = this.enemies.filter(enemy => !enemy.attacked);
         this.gems = this.gems.filter(gem => !gem.collected);
     };
 
     draw() {
         this.gems.forEach(gem => gem.draw());
+        this.enemies.forEach(enemy => enemy.draw());
+    };
+
+    followPlayer(dt, player) {
+        this.enemies.forEach(enemy => enemy.followPlayer(dt, player));
+        this.enemies.forEach(enemy => enemy.enemyAvoidance(this.enemies));
     };
 };
 
@@ -265,18 +380,10 @@ function drawBgGrid() {
 
 
 // Function to Pause the Game
-function PauseGame() {
+function TogglePauseGame() {
     if (gameEnded) {return;}
-    gameRunning = false;
-    gameOverScreen.style.display = "flex";
-    gameOverText.textContent = "Paused";
-};
-
-// Function to Resume the Game
-function ResumeGame() {
-    gameRunning = true;
-    gameOverScreen.style.display = "none";
-    gameOverText.textContent = "";
+    gameRunning = !gameRunning;
+    if (gameRunning) last = performance.now();
 };
 
 // Game Over Function
@@ -290,25 +397,32 @@ function GameOver() {
 
 // Variables for game entities;
 const player = new Player(World.w/2 ,World.h/2 ,32 ,32, 250, '#ffffffff');
-const spawngems = new GemManager(100);
+// When Spawning There is only 'gems' , 'enemy1', 'enemy2', 'enemy3'.
+const spawngems = new GameManager('gems',100);
+const spawnenemies = new GameManager('enemy',60);
 
 let last = performance.now();
 function loop(now) {
     const dt = Math.min(1 / 30 ,(now-last)/1000);
     last = now;
 
-    if (!gameRunning) return;
+    if (!gameRunning && !gameEnded) requestAnimationFrame(loop);
+    if (gameEnded) return;
+    if (gameRunning){
+        player.move(dt);
+        spawnenemies.followPlayer(dt,player);
+        spawngems.update(player);
+        spawnenemies.update(player);
+        updateCamera();
+        
+        drawGrassMap();
+        drawBgGrid();
+        spawngems.draw();
+        player.draw();
+        spawnenemies.draw();
 
-    player.move(dt);
-    spawngems.update(player);
-    updateCamera();
-    
-    drawGrassMap();
-    drawBgGrid();
-    spawngems.draw();
-    player.draw();
-
-    requestAnimationFrame(loop);
+        requestAnimationFrame(loop);
+    };
 };
 generateGrassMap();
 requestAnimationFrame(loop);
