@@ -33,7 +33,13 @@ const Clamp = (v,min,max) => Math.max(min,Math.min(max,v));
 const toScreenX = x => Math.floor(x - camView.x);
 const toScreenY = y => Math.floor(y - camView.y);
 const randomChoice = (...choices) => choices[Math.floor(Math.random()*choices.length)];
-
+function mapImg(imgsArray) {
+    return imgsArray.map(src => {
+        const img = new Image();
+        img.src = src;
+        return img;
+    });
+};
 
 // Resizing the Window
 function resize() {
@@ -73,6 +79,72 @@ class Player {
         this.color = color;
         this._health = 100;
         this._score = 0;
+
+        this.state = 'idle'; //idle , walk-right, walk-left, walk-up, walk-down
+        this.frameindex = 0;
+        this.frametime = 0;
+        this.frameduration = 100; //animation framerate
+
+        this.animations = {
+            idle: mapImg([
+                '../Assets/Player_Animations/Idle/idle0.png',
+                '../Assets/Player_Animations/Idle/idle1.png',
+                '../Assets/Player_Animations/Idle/idle2.png',
+                '../Assets/Player_Animations/Idle/idle3.png',
+                '../Assets/Player_Animations/Idle/idle4.png',
+                '../Assets/Player_Animations/Idle/idle5.png',
+                '../Assets/Player_Animations/Idle/idle6.png',
+                '../Assets/Player_Animations/Idle/idle7.png',
+                '../Assets/Player_Animations/Idle/idle8.png',
+                '../Assets/Player_Animations/Idle/idle9.png',
+                '../Assets/Player_Animations/Idle/idle10.png',
+                '../Assets/Player_Animations/Idle/idle11.png'
+            ]),
+
+            walk_up: mapImg([
+                '../Assets/Player_Animations/Walk-Up/walk-up0.png',
+                '../Assets/Player_Animations/Walk-Up/walk-up1.png',
+                '../Assets/Player_Animations/Walk-Up/walk-up2.png',
+                '../Assets/Player_animations/Walk-Up/walk-up3.png',
+                '../Assets/Player_animations/Walk-Up/walk-up4.png',
+                '../Assets/Player_animations/Walk-Up/walk-up5.png',
+                '../Assets/Player_animations/Walk-Up/walk-up6.png',
+                '../Assets/Player_animations/Walk-Up/walk-up7.png'
+            ]),
+
+            walk_down: mapImg([
+                '../Assets/Player_animations/Walk-Down/walk-down0.png',
+                '../Assets/Player_animations/Walk-Down/walk-down1.png',
+                '../Assets/Player_animations/Walk-Down/walk-down2.png',
+                '../Assets/Player_animations/Walk-Down/walk-down3.png',
+                '../Assets/Player_animations/Walk-Down/walk-down4.png',
+                '../Assets/Player_animations/Walk-Down/walk-down5.png',
+                '../Assets/Player_animations/Walk-Down/walk-down6.png',
+                '../Assets/Player_animations/Walk-Down/walk-down7.png'
+            ]),
+
+            walk_right: mapImg([
+                '../Assets/Player_animations/Walk-Right/walk-right0.png',
+                '../Assets/Player_animations/Walk-Right/walk-right1.png',
+                '../Assets/Player_animations/Walk-Right/walk-right2.png',
+                '../Assets/Player_animations/Walk-Right/walk-right3.png',
+                '../Assets/Player_animations/Walk-Right/walk-right4.png',
+                '../Assets/Player_animations/Walk-Right/walk-right5.png',
+                '../Assets/Player_animations/Walk-Right/walk-right6.png',
+                '../Assets/Player_animations/Walk-Right/walk-right7.png'
+            ]),
+
+            walk_left: mapImg([
+                '../Assets/Player_animations/Walk-Left/walk-left0.png',
+                '../Assets/Player_animations/Walk-Left/walk-left1.png',
+                '../Assets/Player_animations/Walk-Left/walk-left2.png',
+                '../Assets/Player_animations/Walk-Left/walk-left3.png',
+                '../Assets/Player_animations/Walk-Left/walk-left4.png',
+                '../Assets/Player_animations/Walk-Left/walk-left5.png',
+                '../Assets/Player_animations/Walk-Left/walk-left6.png',
+                '../Assets/Player_animations/Walk-Left/walk-left7.png'
+            ])
+        };
     };
 
     get health() {
@@ -355,7 +427,7 @@ function drawGrassMap() {
 };
 
 function drawBgGrid() {
-    context.strokeStyle = "#4a893eff";
+    context.strokeStyle = "#7d8348ff";
     context.lineWidth = 1;
 
     const startX = Math.floor(camView.x / gridSize) * gridSize;
