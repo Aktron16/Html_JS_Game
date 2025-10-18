@@ -147,14 +147,13 @@ class Player {
         };
     };
 
-    get health() {
-        return this._health;
-    };
+    get health() {return this._health;};
 
     set health(newHealth) {
 
         if (newHealth <= 0) {
-            console.log("Player should be Dead."); //Going to add a death state later on
+            console.log("Player is Dead. Score is " + this._score + "."); //Going to add a death state later on
+            gameEnded = true;
         };
 
         this._health = Clamp(newHealth, 0 , 100);
@@ -163,13 +162,9 @@ class Player {
         };
     };
 
-    dmgPlayer(dmg) {
-        this.health -= dmg;
-    }
+    dmgPlayer(dmg) {this.health -= dmg;}
 
-    get score() {
-        return this._score;
-    };
+    get score() {return this._score;};
 
     set score(newScore) {
 
@@ -187,23 +182,52 @@ class Player {
         if (keys.has('s')) yDir+=1;
         if (keys.has('d')) xDir+=1;
 
-        if (xDir !== 0 || yDir !== 0){
+        const isMoving = (xDir !== 0 || yDir !== 0);
+        
+        if (!isMoving) {
+            this.state = 'idle';
+        } else {
+            if (Math.abs(xDir) > Math.abs(yDir)) {
+                this.state = (xDir > 0) ? 'walk_right' : 'walk_left';
+            } else {
+            this.state = (yDir > 0) ? 'walk_down' : 'walk_up';
+            };
+        };
+
+        if (isMoving) {
             const normal = Math.hypot(xDir,yDir)
             xDir /= normal;
             yDir /= normal;
+            this.x += xDir * this.baseSpeed * dt;
+            this.y += yDir * this.baseSpeed * dt;
         };
-
-        this.x += xDir * this.baseSpeed * dt;
-        this.y += yDir * this.baseSpeed * dt;
 
         this.x = Clamp(this.x , 0 , World.w - this.w);
         this.y = Clamp(this.y, 0, World.h - this.h);
         // console.log(this.x , this.y)
+
+        this.updateAnimations(dt);
+    };
+
+    updateAnimations(dt) {
+        this.frametime += dt * 1000;
+        if (this.frametime >= this.frameduration) {
+            this.frametime = 0;
+            const frames = this.animations[this.state];
+            this.frameindex = (this.frameindex + 1) % frames.length;
+        };
     };
 
     draw() {
-        context.fillStyle = this.color;
-        context.fillRect(toScreenX(this.x),toScreenY(this.y),this.w,this.h);
+        const frames = this.animations[this.state];
+        const frame = frames[this.frameindex];
+
+        if (frame && frame.complete) {
+            context.drawImage(frame, toScreenX(this.x) - 48, toScreenY(this.y) - 48, (this.w + 96), (this.h + 96));
+        } else {
+            context.fillStyle = this.color;
+            context.fillRect(toScreenX(this.x),toScreenY(this.y),this.w,this.h);
+        };
     };
 
     collisionDetection(obj) {
@@ -217,7 +241,7 @@ class Player {
 };
 
 class Enemies {
-    constructor (x, y, w, h, baseSpeed, damage, color) {
+    constructor (x, y, w, h, baseSpeed, damage, color, type) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -226,6 +250,71 @@ class Enemies {
         this.damage = damage;
         this.color = color;
         this.attacked = false;
+        this.type = type;
+
+        this.state = this.type + '_right';
+        this.frameindex = 0;
+        this.frametime = 0;
+        this.frameduration = 100;
+
+        this.animations = {
+
+            ant_right: mapImg([
+                '../Assets/Enemy_Animations/Ant-Right/ant-1-flipped.png',
+                '../Assets/Enemy_Animations/Ant-Right/ant-2-flipped.png',
+                '../Assets/Enemy_Animations/Ant-Right/ant-3-flipped.png',
+                '../Assets/Enemy_Animations/Ant-Right/ant-4-flipped.png',
+                '../Assets/Enemy_Animations/Ant-Right/ant-5-flipped.png',
+                '../Assets/Enemy_Animations/Ant-Right/ant-6-flipped.png',
+                '../Assets/Enemy_Animations/Ant-Right/ant-7-flipped.png',
+                '../Assets/Enemy_Animations/Ant-Right/ant-8-flipped.png'
+            ]),
+
+            ant_left: mapImg([
+                '../Assets/Enemy_Animations/Ant-Left/ant-1.png',
+                '../Assets/Enemy_Animations/Ant-Left/ant-2.png',
+                '../Assets/Enemy_Animations/Ant-Left/ant-3.png',
+                '../Assets/Enemy_Animations/Ant-Left/ant-4.png',
+                '../Assets/Enemy_Animations/Ant-Left/ant-5.png',
+                '../Assets/Enemy_Animations/Ant-Left/ant-6.png',
+                '../Assets/Enemy_Animations/Ant-Left/ant-7.png',
+                '../Assets/Enemy_Animations/Ant-Left/ant-8.png'
+            ]),
+
+            bat_right: mapImg([
+                '../Assets/Enemy_Animations/Bat-Right/bat-fly1.png',
+                '../Assets/Enemy_Animations/Bat-Right/bat-fly2.png',
+                '../Assets/Enemy_Animations/Bat-Right/bat-fly3.png'
+            ]),
+
+            bat_left: mapImg([
+                '../Assets/Enemy_Animations/Bat-Left/bat-fly1f.png',
+                '../Assets/Enemy_Animations/Bat-Left/bat-fly2f.png',
+                '../Assets/Enemy_Animations/Bat-Left/bat-fly3f.png'
+            ]),
+
+            bear_right: mapImg([
+                '../Assets/Enemy_Animations/Bear-Right/bear-walk1.png',
+                '../Assets/Enemy_Animations/Bear-Right/bear-walk1.png',
+                '../Assets/Enemy_Animations/Bear-Right/bear-walk2.png',
+                '../Assets/Enemy_Animations/Bear-Right/bear-walk2.png',
+                '../Assets/Enemy_Animations/Bear-Right/bear-walk3.png',
+                '../Assets/Enemy_Animations/Bear-Right/bear-walk3.png',
+                '../Assets/Enemy_Animations/Bear-Right/bear-walk4.png',
+                '../Assets/Enemy_Animations/Bear-Right/bear-walk4.png'
+            ]),
+
+            bear_left: mapImg([
+                '../Assets/Enemy_Animations/Bear-Left/bear-walk1f.png',
+                '../Assets/Enemy_Animations/Bear-Left/bear-walk1f.png',
+                '../Assets/Enemy_Animations/Bear-Left/bear-walk2f.png',
+                '../Assets/Enemy_Animations/Bear-Left/bear-walk2f.png',
+                '../Assets/Enemy_Animations/Bear-Left/bear-walk3f.png',
+                '../Assets/Enemy_Animations/Bear-Left/bear-walk3f.png',
+                '../Assets/Enemy_Animations/Bear-Left/bear-walk4f.png',
+                '../Assets/Enemy_Animations/Bear-Left/bear-walk4f.png'
+            ])
+        };
     };
 
     followPlayer(dt, player) {
@@ -234,18 +323,39 @@ class Enemies {
         const dist = Math.hypot(dx,dy);
 
         if (dist > 0) {
-            this.x += (dx / dist) * this.baseSpeed * dt;
-            this.y += (dy / dist) * this.baseSpeed * dt;
+            const xDir = (dx / dist);
+            const yDir = (dy / dist);
+            this.state = (xDir > 0) ? this.type + '_right' : this.type + '_left';
+            this.x += xDir * this.baseSpeed * dt;
+            this.y += yDir * this.baseSpeed * dt;
         }
         this.x = Clamp(this.x , 0 , World.w - this.w);
         this.y = Clamp(this.y, 0, World.h - this.h);
+
+        this.updateAnimations(dt);
+    };
+
+    updateAnimations(dt) {
+        this.frametime += dt * 1000;
+        if (this.frametime >= this.frameduration) {
+            this.frametime = 0;
+            const frames = this.animations[this.state];
+            this.frameindex = (this.frameindex + 1) % frames.length;
+        };
     };
 
     draw() {
         if (this.attacked) return;
 
-        context.fillStyle = this.color;
-        context.fillRect(toScreenX(this.x),toScreenY(this.y),this.w,this.h);
+        const frames = this.animations[this.state];
+        const frame = frames[this.frameindex];
+
+        if (frame && frame.complete) {
+            context.drawImage(frame,toScreenX(this.x),toScreenY(this.y),this.w,this.h);
+        } else {
+            context.fillStyle = this.color;
+            context.fillRect(toScreenX(this.x),toScreenY(this.y),this.w,this.h);
+        };
     };
 
     checkCollision(player) {
@@ -362,13 +472,13 @@ class GameManager {
             this.gems.push(new Gem(randx,randy));
         } else if (obj == 'enemy1') {
             // This is the normal Enemy.
-            this.enemies.push(new Enemies(randx,randy,30,30,125,5,'#ff0000ff'));
+            this.enemies.push(new Enemies(randx,randy,37,31,125,5,'#ff0000ff','bat'));
         } else if (obj == 'enemy2') {
             // This is the Fast Enemy.
-            this.enemies.push(new Enemies(randx,randy,15,15,200,1,'#ffc400ff'));
+            this.enemies.push(new Enemies(randx,randy,20,20,200,1,'#ffc400ff','ant'));
         } else if (obj == 'enemy3') {
             // This is the Slow Enemy.
-            this.enemies.push(new Enemies(randx,randy,45,45,90,10,'#00ff00ff'));
+            this.enemies.push(new Enemies(randx,randy,55,64,90,10,'#00ff00ff','bear'));
         }
     };
 
@@ -458,19 +568,85 @@ function TogglePauseGame() {
     if (gameRunning) last = performance.now();
 };
 
+function paused() {
+    context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    context.fillRect(0, 0, canvas.width,canvas.height);
+
+    context.save();
+    context.font = 'bold 32px sans-serif';
+    context.fillStyle = 'white';
+    context.textAlign = 'center';
+    context.fillText('Paused', canvas.width / 2, canvas.height / 2);
+    context.font = '16px sans-serif';
+    context.fillText('Press Esc to Resume', canvas.width / 2, canvas.height / 2 + 32);
+    context.restore();
+}
+
 // Game Over Function
 function GameOver() {
-    gameEnded = true;
     gameRunning = false;
-    gameOverScreen.style.display = "block";
-    gameOverText.textContent = "Game Over";
-    resumebt.disabled = true;
+
+    context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    context.fillRect(0, 0, canvas.width,canvas.height);
+
+    context.save();
+    context.font = 'bold 64px sans-serif';
+    context.fillStyle = 'red';
+    context.textAlign = 'center';
+    context.fillText('Game Over', canvas.width / 2, canvas.height / 2);
+    context.font = '16px sans-serif';
+    context.fillStyle = 'white';
+    context.fillText('Press R to Restart', canvas.width / 2, canvas.height / 2 + 64);
+    context.restore();
+    Score_save();
+};
+
+function Score_save() {
+    let user_current = JSON.parse(localStorage.getItem('User_Logged_in')) || null;
+    let users = JSON.parse(localStorage.getItem('credentials')) || [];
+    let leaderboards = JSON.parse(localStorage.getItem('Leaderboards')) || [];
+
+    let nickname,email;
+    if (user_current) {
+        nickname = user_current._nickname;
+        email = user_current._emailID;
+    } else {
+        nickname = 'Guest';
+        email = 'Guest';
+    };
+
+    let playerRecord = leaderboards.find(p => p.email === email);
+    if (!playerRecord) {
+        playerRecord = {nickname: nickname, email: email, scores: []};
+        leaderboards.push(playerRecord);
+    };
+    playerRecord.scores.push(player.score);
+    localStorage.setItem('Leaderboards',JSON.stringify(leaderboards));
+
+    if (user_current) {
+        const score_index = users.findIndex(u => u.email === email);
+        if (score_index !== -1) {
+            if (player.score > users[score_index].high_score) {
+                users[score_index].high_score = player.score;
+            };
+            localStorage.setItem('credentials',JSON.stringify(users));
+        };
+    };
+};
+
+function restartGame() {
+    if (keys.has('r')) {
+        location.reload();
+        gameEnded = false;
+        gameRunning = true;
+    };
+    requestAnimationFrame(restartGame);
 };
 
 // Variables for game entities;
 const player = new Player(World.w/2 ,World.h/2 ,32 ,32, 250, '#ffffffff');
 // When Spawning There is only 'gems' , 'enemy1', 'enemy2', 'enemy3'.
-const spawngems = new GameManager('gems',100);
+const spawngems = new GameManager('gems',250);
 const spawnenemies = new GameManager('enemy',60);
 
 let last = performance.now();
@@ -478,9 +654,15 @@ function loop(now) {
     const dt = Math.min(1 / 30 ,(now-last)/1000);
     last = now;
 
-    if (!gameRunning && !gameEnded) requestAnimationFrame(loop);
-    if (gameEnded) return;
-    if (gameRunning){
+    if (!gameRunning && !gameEnded) {
+        paused();
+        requestAnimationFrame(loop);
+    }
+    if (gameEnded) {
+        GameOver();
+        requestAnimationFrame(restartGame);
+    };
+    if (gameRunning && !gameEnded){
         player.move(dt);
         spawnenemies.followPlayer(dt,player);
         spawngems.update(player);

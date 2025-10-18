@@ -27,8 +27,9 @@ function OnRegisterClick(){
         users.push(credentials);
 
         localStorage.setItem('credentials',JSON.stringify(users));
-        alert(`Registered!\nNickname: ${credentials.nickname}`);
-        location.reload();
+        feedback.textContent = `Registered!\nNickname: ${credentials.nickname}`;
+        setTimeout(() => feedback.textContent = "", 5000);
+        setTimeout(() => location.reload(), 6000);
     } else {
         feedback.textContent = `This User ${user.email} aldready exists...`;
         setTimeout(() => feedback.textContent = "", 3000);
@@ -40,23 +41,25 @@ function OnRegisterClick(){
 function OnLoginClick(){
 
     if (users.length === 0){
-        alert('Add a user first...');
+        feedback.textContent = "Please Register Someone First.";
+        setTimeout(() => feedback.textContent = '', 3000);
         return;
     }
 
     const user = users.find(u => u.email === form.email.value);
 
     if (!user){
-        feedback.textContent = "Your Email-ID is Invalid\n(or) Doesn't Exist in the Database.\nPlease Register.";
+        feedback.textContent = `Your Email-ID is Invalid\n(or) Doesn't Exist in the Database.\nPlease Register.`;
         setTimeout(() => feedback.textContent = "", 3000);
         return;
     }
 
     if (user.password === form.password.value) {
         if (checkCurrentUser()) {
-            currentUser(user.nickname , user.email, user.high_score);
-            alert(`Welcome, ${user.nickname}!`);
-            location.reload();
+            currentUser(user.nickname , user.email);
+            feedback.textContent = `Logged In as ${user.nickname}`;
+            setTimeout(() => feedback.textContent = '', 3000);
+            setTimeout(() => location.reload(), 5000);
         } else {
             feedback.textContent = "Please Signout before Logging-In"
             setTimeout(() => feedback.textContent = "", 3000);
@@ -70,11 +73,10 @@ function OnLoginClick(){
     }
 };
 
-function currentUser(nickname , email , highscore){
+function currentUser(nickname , email){
     localStorage.setItem('User_Logged_in', JSON.stringify({
     _nickname: nickname,
-    _emailID: email,
-    _highscore: highscore
+    _emailID: email
     }));
 };
 
