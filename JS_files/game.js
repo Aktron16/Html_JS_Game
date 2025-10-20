@@ -40,6 +40,14 @@ function mapImg(imgsArray) {
         return img;
     });
 };
+function audioImport(audioArray) {
+    return audioArray.map(src => {
+        const audio = new Audio();
+        audio.src = src;
+        audio.volume = 0.4;
+        return audio;
+    });
+};
 
 // Resizing the Window
 function resize() {
@@ -55,7 +63,6 @@ function updateCamera() {
     camView.x = Clamp (camView.x, 0 ,Math.max(0,World.w-camView.w));
     camView.y = Clamp (camView.y, 0 ,Math.max(0,World.h-camView.h));
 };
-
 
 // Keyboard Input
 let keys = new Set();
@@ -145,6 +152,11 @@ class Player {
                 '../Assets/Player_animations/Walk-Left/walk-left7.png'
             ])
         };
+
+        this.sfx = {
+            gem_pickup: audioImport(['../Assets/Music_Sfx/Sfx/retro-coin-4-236671.mp3']),
+            hurt: audioImport(['../Assets/Music_Sfx/Sfx/retro-hurt-2-236675.mp3'])
+        };
     };
 
     get health() {return this._health;};
@@ -162,7 +174,11 @@ class Player {
         };
     };
 
-    dmgPlayer(dmg) {this.health -= dmg;}
+    dmgPlayer(dmg) {
+        this.health -= dmg;
+        this.sfx.hurt[0].currentTime = 0;
+        this.sfx.hurt[0].play().catch(() => {});
+    }
 
     get score() {return this._score;};
 
@@ -437,6 +453,8 @@ class Gem {
         if (player.collisionDetection(this)) {
             this.collected = true;
             player.score += this.value;
+            player.sfx.gem_pickup[0].currentTime = 0;
+            player.sfx.gem_pickup[0].play().catch(() => {});
             return true;            
         };
 
@@ -510,6 +528,51 @@ class GameManager {
     };
 };
 
+class BGAudioManager {
+    constructor() {
+        this.bgMusic = audioImport([
+            '../Assets/Music_Sfx/game-music-loop-8-145362.mp3',
+            '../Assets/Music_Sfx/game-music-loop-9-145494.mp3',
+            '../Assets/Music_Sfx/game-music-loop-10-145572.mp3',
+            '../Assets/Music_Sfx/game-music-loop-7-145285.mp3'
+        ]);
+
+        this.currentTrack = 0;
+    };
+
+    playRandTrack() {
+        this.currentTrack = Math.floor(Math.random() * this.bgMusic.length);
+        this.playCurrent();
+    };
+
+    playCurrent() {
+        this.bgMusic.forEach(track => {
+            track.pause();
+            track.currentTime = 0;
+        });
+
+        this.bgMusic[this.currentTrack].play().catch(() => {});
+        this.bgMusic[this.currentTrack].onended = () => this.nextTrack();
+    }
+    nextTrack() {
+        this.currentTrack = (this.currentTrack + 1) % this.bgMusic.length;
+        this.playCurrent();
+    };
+
+    pauseTrack() {
+        this.bgMusic[this.currentTrack].pause();
+    };
+
+    resumeTrack() {
+        this.bgMusic[this.currentTrack].play().catch(() => {});
+    };
+
+    resetTrack() {
+        this.pauseTrack();
+        this.bgMusic[this.currentTrack].currentTime = 0;
+    };
+};
+
 function generateGrassMap() {
     for (let y = 0; y < Math.ceil(World.h/gridSize); y++) {
         let row = []
@@ -565,7 +628,12 @@ function drawBgGrid() {
 function TogglePauseGame() {
     if (gameEnded) {return;}
     gameRunning = !gameRunning;
-    if (gameRunning) last = performance.now();
+    if (gameRunning) {
+        last = performance.now();
+        music.resumeTrack();
+    } else {
+        music.pauseTrack();
+    };
 };
 
 function paused() {
@@ -598,6 +666,7 @@ function GameOver() {
     context.fillStyle = 'white';
     context.fillText('Press R to Restart', canvas.width / 2, canvas.height / 2 + 64);
     context.restore();
+    music.resetTrack();
     Score_save();
 };
 
@@ -648,6 +717,7 @@ const player = new Player(World.w/2 ,World.h/2 ,32 ,32, 250, '#ffffffff');
 // When Spawning There is only 'gems' , 'enemy1', 'enemy2', 'enemy3'.
 const spawngems = new GameManager('gems',250);
 const spawnenemies = new GameManager('enemy',60);
+const music = new BGAudioManager();
 
 let last = performance.now();
 function loop(now) {
@@ -678,6 +748,8 @@ function loop(now) {
         requestAnimationFrame(loop);
     };
 };
+
+music.playRandTrack();
 generateGrassMap();
 requestAnimationFrame(loop);
 
