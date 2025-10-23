@@ -1,8 +1,8 @@
 :root {
   /* Core Colors */
-  --color-primary: #FF6B00;      /* vibrant orange */
-  --color-secondary: #FFB100;    /* lighter warm orange/yellow */
-  --color-accent: #FF3C00;       /* intense red-orange accent */
+  --color-primary: rgb(255, 126, 0);      /* vibrant purple */
+  --color-secondary: rgb(255, 126, 0, 0.8);    /* lighter warm purple */
+  --color-accent: #ff8c00;       /* intense purple accent */
 
   /* Neutrals / Contrast */
   --color-bg: #000000;           /* full black background */
@@ -24,8 +24,15 @@
   --color-border: #FF6B00;       /* orange borders for vibrant pop */
   /* Shadows */
   --shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.6);       /* deep dark shadow */
-  --shadow-glow: 0 0 10px rgba(255, 107, 0, 1);     /* orange glow */
+  --shadow-glow: 0 0 10px rgba(255, 126, 0, 1);     /* orange glow */
   --shadow-strong: 0 4px 10px rgba(255, 107, 0, 0.4); /* stronger glow for hover */
+
+  /* Table Colors */
+  --table-color: rgba(255, 230, 200, 0.8);
+  --thead-color: rgba(255, 126, 0, 0.6);
+  --table-alternate: rgba(255, 253, 208, 0.4);
+  /* Image Backgrounds */
+  --bg-gif: url(Assets/starfall-night-sky-mountains-aesthetic-gif-preview-desktop-wallpaper.gif);
 }
 
 * { 
@@ -35,7 +42,8 @@
 }
 
 body {
-    background: var(--color-bg);
+    background: var(--bg-gif);
+    background-size: cover;
     user-select: none;
 }
 
@@ -61,7 +69,7 @@ body {
     height: auto;
     width: 100vw;
     background: var(--color-header-bg);
-    border: 2px solid var(--color-bg);
+    border: 1px solid var(--color-bg);
 }
 
 .header-left,
@@ -99,7 +107,7 @@ body {
     font-size: 72px;
     align-self: center;
     margin: 20px;
-    color: var(--color-primary);
+    color: var(--color-secondary);
 }
 
 .user-form-labels {
@@ -108,7 +116,7 @@ body {
     max-width: 100px;
     margin: 10px;
     text-align: left;
-    color: var(--color-primary);
+    color: var(--color-secondary);
 }
 
 .form-input {
@@ -161,8 +169,8 @@ body {
     margin: 10px 0 10px 0;
     font-weight: bold;
     color: var(--color-text-black);
-    background-color: var(--color-primary);
-    border: 2px solid var(--color-primary);
+    background-color: var(--color-secondary);
+    border: 2px solid var(--color-secondary);
     transition: transform 0.3s ease;
 }
 
@@ -277,7 +285,7 @@ body {
     background: var(--color-bg);
     border: var(--color-border);
     border-radius: 6px 8px;
-    color: var(--color-primary);
+    color: var(--color-secondary);
 }
 
 .signout-bt:hover {
@@ -299,7 +307,7 @@ body {
     , padding-left 0.5s ease-in-out 
     ,width 0.5s ease;
     overflow: hidden;
-    border: 2px solid var(--color-bg);
+    border: 1px solid var(--color-bg);
     z-index: 1;
     float: left;
 }
@@ -313,7 +321,6 @@ body {
 .sidebar-bt, .sidebar-bt span {
     white-space: nowrap;
     display: block;
-    background: var(--color-primary);
     width: 90%;
     padding: 5px;
     text-decoration: none;
@@ -371,36 +378,34 @@ body {
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* Game End / Pause Screen */
-#game-end-pause {
+#leaderboards-table {
     display: flex;
     flex-direction: column;
+    margin: auto;
+    height: 90%;
+    width: 50%;
+    background-color: var(--table-color);
+    font-size: large;
+    box-shadow: var(--shadow-glow);
+}
+
+#leaderboards-table table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+#leaderboards-table thead th{
+    background-color: var(--thead-color);
     text-align: center;
-    justify-content: center;
-    align-items: center;
-    z-index: 5;
-    border: 2px solid var(--color-border);
-
-    display: none;
-    background: rgba(0,0,0,0.3);
-
-
+    text-transform: uppercase;
+    padding: 10px 30px;
 }
 
-#end-pause-text {
-    font-size: 90px;
-    color: red;
-    margin-bottom: 20px;
-}
-
-.game-pause-bt {
-    width: 200px;
-    height: 50px;
-    font-size: 25px;
-    margin: 10px;
-}
-
-.game-pause-bt:hover {
-    background-color: green;
-    box-shadow: 0 2px 4px rgba(1, 150, 1, 0.5);
+#leaderboards-table tbody td {
+    padding: 10px 20px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }

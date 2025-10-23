@@ -600,7 +600,7 @@ function drawGrassMap() {
 };
 
 function drawBgGrid() {
-    context.strokeStyle = "#7d8348ff";
+    context.strokeStyle = "rgba(140, 140, 78, 1)";
     context.lineWidth = 1;
 
     const startX = Math.floor(camView.x / gridSize) * gridSize;
@@ -652,8 +652,6 @@ function paused() {
 
 // Game Over Function
 function GameOver() {
-    gameRunning = false;
-
     context.fillStyle = 'rgba(0, 0, 0, 0.5)';
     context.fillRect(0, 0, canvas.width,canvas.height);
 
@@ -666,8 +664,8 @@ function GameOver() {
     context.fillStyle = 'white';
     context.fillText('Press R to Restart', canvas.width / 2, canvas.height / 2 + 64);
     context.restore();
-    music.resetTrack();
-    Score_save();
+    restartGame();
+    requestAnimationFrame(GameOver);
 };
 
 function Score_save() {
@@ -709,7 +707,6 @@ function restartGame() {
         gameEnded = false;
         gameRunning = true;
     };
-    requestAnimationFrame(restartGame);
 };
 
 // Variables for game entities;
@@ -729,8 +726,11 @@ function loop(now) {
         requestAnimationFrame(loop);
     }
     if (gameEnded) {
+        gameRunning = false;
+        music.resetTrack();
+        Score_save();
         GameOver();
-        requestAnimationFrame(restartGame);
+        requestAnimationFrame(GameOver);
     };
     if (gameRunning && !gameEnded){
         player.move(dt);
