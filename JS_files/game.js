@@ -4,6 +4,7 @@ const context = canvas.getContext('2d');
 const scoreDisp = document.getElementById("score");
 const healthDisp = document.getElementById("health");
 
+import { user_current, users, leaderboards } from "./module.js";
 
 // World Dimensions
 const World = {w: 6400 , h: 6400};
@@ -669,10 +670,6 @@ function GameOver() {
 };
 
 function Score_save() {
-    let user_current = JSON.parse(localStorage.getItem('User_Logged_in')) || null;
-    let users = JSON.parse(localStorage.getItem('credentials')) || [];
-    let leaderboards = JSON.parse(localStorage.getItem('Leaderboards')) || [];
-
     let nickname,email;
     if (user_current) {
         nickname = user_current._nickname;

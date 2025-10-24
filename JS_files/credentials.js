@@ -3,9 +3,7 @@ const loginBtn = document.getElementById('loginBtn');
 const registerBtn = document.getElementById('registerBtn');
 const feedback = document.getElementById('feedback');
 
-
-let user_current = JSON.parse(localStorage.getItem('User_Logged_in')) || null;
-let users = JSON.parse(localStorage.getItem('credentials')) || [];
+import { user_current, users } from "./module.js";
 
 function OnRegisterClick(){
 
@@ -84,12 +82,16 @@ function checkCurrentUser() {
     return user_current === null;
 }
 
-loginBtn.addEventListener('click',function(onclick) {
-    onclick.preventDefault();
-    OnLoginClick();
-});
+document.addEventListener('DOMContentLoaded', () => {
+    if (loginBtn && registerBtn) {
+        loginBtn.addEventListener('click',function(onclick) {
+            onclick.preventDefault();
+            OnLoginClick();
+        });
 
-registerBtn.addEventListener('click',function(onclick) {
-    onclick.preventDefault();
-    OnRegisterClick();
+        registerBtn.addEventListener('click',function(onclick) {
+            onclick.preventDefault();
+            OnRegisterClick();
+        });
+    };
 });

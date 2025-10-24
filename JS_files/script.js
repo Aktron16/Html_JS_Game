@@ -4,7 +4,7 @@ const avatar = document.getElementById("avatarBtn");
 const overlayBox = document.getElementById("overlayBox");
 const user_nickname = document.getElementById("user-nickname");
 
-let User_Logged_in = JSON.parse(localStorage.getItem('User_Logged_in')) || null;
+import { user_current as User_Logged_in } from "./module.js";
 const logged = checkLoggedin()
 
 function ToggleSideBar(){

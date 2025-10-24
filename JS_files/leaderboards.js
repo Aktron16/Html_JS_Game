@@ -1,6 +1,6 @@
 const thead = document.getElementById('table-body');
 
-const credentials = JSON.parse(localStorage.getItem('credentials')) || [];
+import { users as credentials } from './module.js';
 
 function addRow(nickname, username, highscore) {
     const row = document.createElement('tr');
