@@ -1,8 +1,10 @@
 const app = document.querySelector(".app")
 
-const avatar = document.getElementById("avatarBtn");
 const overlayBox = document.getElementById("overlayBox");
 const user_nickname = document.getElementById("user-nickname");
+const menuBtn = document.getElementById('menuBtn');
+const avatarBtn = document.getElementById('avatarBtn');
+const signoutBt = document.getElementById('signout-bt');
 
 import { user_current as User_Logged_in } from "./module.js";
 const logged = checkLoggedin()
@@ -17,26 +19,26 @@ function ToggleSignOutBox(){
 
 function LoggedIn() {
     if (logged) {
-        avatar.style.display = 'flex';
+        avatarBtn.style.display = 'flex';
         user_nickname.textContent = User_Logged_in._nickname;
     } else if (!logged) {
-        avatar.style.display = 'none';
+        avatarBtn.style.display = 'none';
     };
-}
+};
 
 function Signout() {
-    if (!logged) {
-        alert("You aren't logged in...");
-        return;
-    } else if (logged) {
+    if (!logged) return;
+    if (logged) {
         localStorage.removeItem("User_Logged_in");
         location.reload();
-        LoggedIn();
-    }
-}
+    };
+};
 
 function checkLoggedin() {
     return User_Logged_in !== null;
-}
+};
 
 document.addEventListener('DOMContentLoaded', LoggedIn);
+menuBtn.addEventListener('click', ToggleSideBar);
+avatarBtn.addEventListener('click', ToggleSignOutBox);
+signoutBt.addEventListener('click', Signout);

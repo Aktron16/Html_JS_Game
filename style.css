@@ -280,7 +280,7 @@ body {
     display: flex;
 }
 
-.signout-bt {
+#signout-bt {
     padding: 5px;
     background: var(--color-bg);
     border: var(--color-border);
@@ -288,7 +288,7 @@ body {
     color: var(--color-secondary);
 }
 
-.signout-bt:hover {
+#signout-bt:hover {
     transform: translateY(2px);
     box-shadow: var(--shadow-dark);
 }

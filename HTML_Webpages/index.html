@@ -13,7 +13,7 @@
             <!-- Left Side -->
             <div class ="header-left">
                 <!-- This is the sidebar button -->
-                <button class="menu-bt" id="menuBtn" onclick="ToggleSideBar()"></button>
+                <button class="menu-bt" id="menuBtn"></button>
                 <!-- The Logo -->
                 <a class = "logo" href="">
                     <img src = "../Assets/Gem_Collector_header_logo.png" alt = "youtube_logo">
@@ -29,12 +29,12 @@
                 <!-- Login and Register Button -->
                 <a class="header-bt" id="login-register-Btn" href=""><span>Login / Register</span></a>
                 <!-- Avatar profile pic -->
-                <button class="avatar-bt" id="avatarBtn" onclick="ToggleSignOutBox()"></button>
+                <button class="avatar-bt" id="avatarBtn"></button>
 
                 <!-- Overlay Sign Out Box -->
                 <div class="overlay-box" id="overlayBox">
                 <p>Signed in as <b id="user-nickname">Guest</b></p>
-                <button class="signout-bt" onclick="Signout()">Sign Out</button>
+                <button id="signout-bt">Sign Out</button>
                 </div>
             </div>
         </header>
@@ -74,7 +74,7 @@
                 <br>
                 <button class="submit-bt" type="submit" id="registerBtn">Register</button>
                 <br>
-                <button class="submit-bt" type="button" onclick="location.href='game.html'">Play as a Guest</button>
+                <button class="submit-bt" type="button" id="guestBtn">Play as a Guest</button>
             </form>
 
         </div>
