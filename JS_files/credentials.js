@@ -98,10 +98,10 @@ function OnLoginClick(){
 
 function OnGuestClick() {
     if (checkCurrentUser()) {
-        window.location.href = 'game.html';
+        window.location.href = 'HTML_Webpages/game.html';
     } else {
         localStorage.removeItem('User_Logged_in');
-        window.location.href = 'game.html';
+        window.location.href = 'HTML_Webpages/game.html';
     }
 }
 
