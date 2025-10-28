@@ -48,16 +48,12 @@
             </nav>
         </aside>
 
-        <!-- The Main Login / Register Box -->
+        <!-- The Main Login Box -->
         <div id="loginBox">
-            <h2 class="welcome">Welcome</h2>
+            <h2 class="welcome">Login</h2>
             <br>
             <!-- The Form -->
-            <form id="user-form">
-                <!-- Nickname input -->
-                <label class="user-form-labels" for="nickname">Nickname:</label>
-                <input class="form-input" type="text" name="nickname" id="nickname" placeholder="Nickname..."/>
-                <br>
+            <form id="login-form">
                 <!-- Email Input -->
                 <label class="user-form-labels" for="email-id">Email-ID:</label>
                 <input class="form-input" type="email" name="email" id="email-id" placeholder="Email-ID..." required/>
@@ -67,16 +63,53 @@
                 <input class="form-input" type="password" name="password" id="password" placeholder="Password..." required/>
                 <br><br>
                 <!-- Feedback -->
-                <span id="feedback"></span>
+                <span class="feedback" id="login-feedback"></span>
                 <br>
                 <!-- Submit Button -->
                 <button class="submit-bt" type="submit" id="loginBtn">Login</button>
                 <br>
+                <button class="guest-submit-bt" type="button">Play as a Guest</button>
+                <br>
+                <p class="change-p"> Don't have an Account?</p>
+                <br>
+                <button class="submit-bt" type="button" id="change-registerBtn">Register</button>
+            </form>
+        </div>
+
+        <!-- The Register Box -->
+        <div id="registerBox">
+            <h2 class="welcome">Register</h2>
+            <br>
+            <!-- The Form -->
+            <form id="register-form">
+                <!-- Nickname input -->
+                <label class="user-form-labels" for="nickname">Nickname:</label>
+                <input class="form-input" type="text" name="nickname" id="nickname" placeholder="Nickname..."/>
+                <br>
+                <!-- Phone Number -->
+                <label class="user-form-labels" for="phone">Phone Number:</label>
+                <input class="form-input" type="tel" name="phone" id="phone" placeholder="Phone Number..."/>
+                <br>
+                <!-- Email Input -->
+                <label class="user-form-labels" for="email">Email-ID:</label>
+                <input class="form-input" type="email" name="email" id="email" placeholder="Email-ID..." required/>
+                <br>
+                <!-- Password Input -->
+                <label class="user-form-labels" for="pass">Password:</label>
+                <input class="form-input" type="password" name="password" id="pass" placeholder="Password..." required/>
+                <br><br>
+                <!-- Feedback -->
+                <span class="feedback" id="register-feedback"></span>
+                <br>
+                <!-- Submit Button -->
                 <button class="submit-bt" type="submit" id="registerBtn">Register</button>
                 <br>
-                <button class="submit-bt" type="button" id="guestBtn">Play as a Guest</button>
+                <button class="guest-submit-bt" type="button">Play as a Guest</button>
+                <br>
+                <p class="change-p"> Aldready have an Account?</p>
+                <br>
+                <button class="submit-bt" type="button" id="change-loginBtn">Login</button>
             </form>
-
         </div>
     </div>
 <script type="module" src = "../JS_files/script.js" defer></script>

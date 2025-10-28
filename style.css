@@ -84,7 +84,8 @@ body {
     gap: 10px;
 }
 
-#loginBox {
+#loginBox,
+#registerBox {
     grid-area: main;
     display: flex;
     flex-direction: column;
@@ -103,6 +104,10 @@ body {
     margin: 50px 10% 50px 10% ;
 }
 
+#registerBox {
+    display: none;
+}
+
 .welcome {
     font-size: 72px;
     align-self: center;
@@ -113,7 +118,7 @@ body {
 .user-form-labels {
     display: inline-block;
     font-size: 20px;
-    max-width: 100px;
+    width: 150px;
     margin: 10px;
     text-align: left;
     color: var(--color-secondary);
@@ -128,7 +133,12 @@ body {
     text-align: left;
 }
 
-#feedback {
+.change-p {
+    color: var(--color-secondary);
+    margin: 15px 0 0 0;
+}
+
+.feedback {
     font-weight: bold;
     margin: 20px;
     padding-bottom: 10px;
@@ -156,13 +166,14 @@ body {
     100% {background-position-x: 100%;}
 }
 
-#feedback:empty {
+.feedback:empty {
     background: none;
     color: inherit;
     animation: none;
 }
 
-.submit-bt {
+.submit-bt,
+.guest-submit-bt {
     display: inline-block;
     width: 250px;
     height: 30px;
@@ -174,7 +185,8 @@ body {
     transition: transform 0.3s ease;
 }
 
-.submit-bt:hover {
+.submit-bt:hover,
+.guest-submit-bt:hover {
     transform: translate(-1px , -2px);
     box-shadow: var(--shadow-strong);
 }
