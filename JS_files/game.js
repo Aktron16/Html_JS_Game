@@ -113,44 +113,44 @@ class Player {
                 '../Assets/Player_Animations/Walk-Up/walk-up0.png',
                 '../Assets/Player_Animations/Walk-Up/walk-up1.png',
                 '../Assets/Player_Animations/Walk-Up/walk-up2.png',
-                '../Assets/Player_animations/Walk-Up/walk-up3.png',
-                '../Assets/Player_animations/Walk-Up/walk-up4.png',
-                '../Assets/Player_animations/Walk-Up/walk-up5.png',
-                '../Assets/Player_animations/Walk-Up/walk-up6.png',
-                '../Assets/Player_animations/Walk-Up/walk-up7.png'
+                '../Assets/Player_Animations/Walk-Up/walk-up3.png',
+                '../Assets/Player_Animations/Walk-Up/walk-up4.png',
+                '../Assets/Player_Animations/Walk-Up/walk-up5.png',
+                '../Assets/Player_Animations/Walk-Up/walk-up6.png',
+                '../Assets/Player_Animations/Walk-Up/walk-up7.png'
             ]),
 
             walk_down: mapImg([
-                '../Assets/Player_animations/Walk-Down/walk-down0.png',
-                '../Assets/Player_animations/Walk-Down/walk-down1.png',
-                '../Assets/Player_animations/Walk-Down/walk-down2.png',
-                '../Assets/Player_animations/Walk-Down/walk-down3.png',
-                '../Assets/Player_animations/Walk-Down/walk-down4.png',
-                '../Assets/Player_animations/Walk-Down/walk-down5.png',
-                '../Assets/Player_animations/Walk-Down/walk-down6.png',
-                '../Assets/Player_animations/Walk-Down/walk-down7.png'
+                '../Assets/Player_Animations/Walk-Down/walk-down0.png',
+                '../Assets/Player_Animations/Walk-Down/walk-down1.png',
+                '../Assets/Player_Animations/Walk-Down/walk-down2.png',
+                '../Assets/Player_Animations/Walk-Down/walk-down3.png',
+                '../Assets/Player_Animations/Walk-Down/walk-down4.png',
+                '../Assets/Player_Animations/Walk-Down/walk-down5.png',
+                '../Assets/Player_Animations/Walk-Down/walk-down6.png',
+                '../Assets/Player_Animations/Walk-Down/walk-down7.png'
             ]),
 
             walk_right: mapImg([
-                '../Assets/Player_animations/Walk-Right/walk-right0.png',
-                '../Assets/Player_animations/Walk-Right/walk-right1.png',
-                '../Assets/Player_animations/Walk-Right/walk-right2.png',
-                '../Assets/Player_animations/Walk-Right/walk-right3.png',
-                '../Assets/Player_animations/Walk-Right/walk-right4.png',
-                '../Assets/Player_animations/Walk-Right/walk-right5.png',
-                '../Assets/Player_animations/Walk-Right/walk-right6.png',
-                '../Assets/Player_animations/Walk-Right/walk-right7.png'
+                '../Assets/Player_Animations/Walk-Right/walk-right0.png',
+                '../Assets/Player_Animations/Walk-Right/walk-right1.png',
+                '../Assets/Player_Animations/Walk-Right/walk-right2.png',
+                '../Assets/Player_Animations/Walk-Right/walk-right3.png',
+                '../Assets/Player_Animations/Walk-Right/walk-right4.png',
+                '../Assets/Player_Animations/Walk-Right/walk-right5.png',
+                '../Assets/Player_Animations/Walk-Right/walk-right6.png',
+                '../Assets/Player_Animations/Walk-Right/walk-right7.png'
             ]),
 
             walk_left: mapImg([
-                '../Assets/Player_animations/Walk-Left/walk-left0.png',
-                '../Assets/Player_animations/Walk-Left/walk-left1.png',
-                '../Assets/Player_animations/Walk-Left/walk-left2.png',
-                '../Assets/Player_animations/Walk-Left/walk-left3.png',
-                '../Assets/Player_animations/Walk-Left/walk-left4.png',
-                '../Assets/Player_animations/Walk-Left/walk-left5.png',
-                '../Assets/Player_animations/Walk-Left/walk-left6.png',
-                '../Assets/Player_animations/Walk-Left/walk-left7.png'
+                '../Assets/Player_Animations/Walk-Left/walk-left0.png',
+                '../Assets/Player_Animations/Walk-Left/walk-left1.png',
+                '../Assets/Player_Animations/Walk-Left/walk-left2.png',
+                '../Assets/Player_Animations/Walk-Left/walk-left3.png',
+                '../Assets/Player_Animations/Walk-Left/walk-left4.png',
+                '../Assets/Player_Animations/Walk-Left/walk-left5.png',
+                '../Assets/Player_Animations/Walk-Left/walk-left6.png',
+                '../Assets/Player_Animations/Walk-Left/walk-left7.png'
             ])
         };
 
@@ -409,9 +409,9 @@ class Enemies {
                     const overlap = minDist - dist;
 
                     this.x += (dx / dist) * (overlap / 2);
-                    this.x += (dy / dist) * (overlap / 2);
+                    this.y += (dy / dist) * (overlap / 2);
                     other.x -= (dx / dist) * (overlap / 2);
-                    other.x -= (dy / dist) * (overlap / 2);
+                    other.y -= (dy / dist) * (overlap / 2);
                 };
             };
         };
@@ -590,7 +590,7 @@ function drawGrassMap() {
     for (let x = 0; x < World.w; x += gridSize) {
         for (let y = 0; y < World.h; y += gridSize) {
             context.drawImage(
-                grassMap[Math.floor(x/gridSize)][Math.floor(y/gridSize)],
+                grassMap[Math.floor(y/gridSize)][Math.floor(x/gridSize)],
                 toScreenX(x),
                 toScreenY(y),
                 gridSize,

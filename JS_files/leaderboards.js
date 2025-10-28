@@ -8,9 +8,9 @@ function addRow(nickname, username, highscore) {
     thead.appendChild(row);
 };
 
-credentials.sort((a,b) => b.highscore - a.highscore);
+credentials.sort((a,b) => b.high_score - a.high_score);
 
 credentials.forEach(element => {
-    element.email = element.email.replace(/@.*$/,'');
-    addRow(element.nickname, element.email, element.high_score);
+    const display_email = element.email.replace(/@.*$/,'');
+    addRow(element.nickname, display_email, element.high_score);
 });
