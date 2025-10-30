@@ -29,7 +29,7 @@ function LoggedIn() {
 function Signout() {
     if (!logged) return;
     if (logged) {
-        localStorage.removeItem("User_Logged_in");
+        sessionStorage.removeItem("User_Logged_in");
         location.reload();
     };
 };

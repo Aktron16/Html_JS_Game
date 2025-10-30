@@ -29,6 +29,26 @@ function OnRegisterClick(){
         return;
     };
 
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(credentials.email)) {
+        feedback.textContent = 'Please enter a valid email address.';
+        resetFeedback(3, feedback);
+        register_form.email.value = '';
+        return;
+    };
+
+    if (!/^\d{10}$/.test(credentials.phone)) {
+        feedback.textContent = 'Phone number must be 10 digits long.';
+        resetFeedback(3, feedback);
+        register_form.phone.value = '';
+        return;
+    };
+    if (!/^\d+$/.test(credentials.phone)) {
+        feedback.textContent = 'Phone number must contain only numbers.';
+        resetFeedback(3, feedback);
+        register_form.phone.value = '';
+        return;
+    };
+
     if (credentials.password.length < 5) {
         feedback.textContent = 'Password must be at least 5 characters long.';
         resetFeedback(3, feedback);
@@ -57,6 +77,10 @@ function OnRegisterClick(){
         feedback.textContent = `Registered User Nickname: ${credentials.nickname}`;
         resetFeedback(3, feedback);
         register_form.reset();
+        setTimeout(() => {
+            loginBox.style.display = 'flex';
+            registerBox.style.display = 'none';
+        }, 5000);
     } else {
         feedback.textContent = `This User ${user.email} aldready exists...`;
         resetFeedback(3, feedback);
@@ -115,7 +139,7 @@ function OnGuestClick() {
 }
 
 function currentUser(nickname , email){
-    localStorage.setItem('User_Logged_in', JSON.stringify({
+    sessionStorage.setItem('User_Logged_in', JSON.stringify({
     _nickname: nickname,
     _emailID: email
     }));

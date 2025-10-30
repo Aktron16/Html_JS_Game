@@ -1,40 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML JavaScript Game</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>Home Screen</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="app">        
+    <div class="app">
         <!-- The Top Header -->
-        <header class ="header">
+        <header class="header">
             <!-- Left Side -->
-            <div class ="header-left">
+            <div class="header-left">
                 <!-- This is the sidebar button -->
                 <button class="menu-bt" id="menuBtn"></button>
                 <!-- The Logo -->
-                <a class = "logo" href="#">
-                    <img src = "../Assets/Gem_Collector_header_logo.png" alt = "Gem Collector">
+                <a class="logo" href="#">
+                    <img src="Assets/Gem_Collector_header_logo.png" alt="Gem Collector">
                 </a>
             </div>
-            
+
             <!-- Right Side -->
             <div class="header-right">
-                <!-- Game Button-->
-                <a class="header-bt" id="gameBtn" href="HTML_Webpages/game.html"><span>Game</span></a>
+                <!-- Game Button -->
+                <a class="header-bt" id="gameBtn" href="HTML_Webpages/game.html">
+                    <img src="Assets/game_button.png" alt="Game">
+                    <span class="tooltip-text">Game</span>
+                </a>
                 <!-- Leaderboards Button -->
-                <a class="header-bt" id="leaderboardsBtn" href="HTML_Webpages/leaderboards.html"><span>Leaderboards</span></a>
+                <a class="header-bt" id="leaderboardsBtn" href="HTML_Webpages/leaderboards.html">
+                    <img src="Assets/leaderboard_button.png" alt="Leaderboard">
+                    <span class="tooltip-text">Leaderboards</span>
+                </a>
                 <!-- Login and Register Button -->
-                <a class="header-bt" id="login-register-Btn" href=""><span>Login / Register</span></a>
+                <a class="header-bt" id="login-register-Btn" href="HTML_Webpages/log_reg.html">
+                    <img src="Assets/login_button.png" alt="Login / Register">
+                    <span class="tooltip-text">Login / Register</span>
+                </a>
                 <!-- Avatar profile pic -->
                 <button class="avatar-bt" id="avatarBtn"></button>
 
                 <!-- Overlay Sign Out Box -->
                 <div class="overlay-box" id="overlayBox">
-                <p>Signed in as <b id="user-nickname">Guest</b></p>
-                <button id="signout-bt">Sign Out</button>
+                    <p>Signed in as <b id="user-nickname">Guest</b></p>
+                    <button id="signout-bt">Sign Out</button>
                 </div>
             </div>
         </header>
@@ -44,75 +55,12 @@
             <nav class="nav">
                 <a class="sidebar-bt" href="HTML_Webpages/game.html"><span>Game</span></a><br>
                 <a class="sidebar-bt" href="HTML_Webpages/leaderboards.html"><span>Leaderboards</span></a><br>
-                <a class="sidebar-bt" href=""><span>Login / Register</span></a>
+                <a class="sidebar-bt" href="HTML_Webpages/log_reg.html"><span>Login / Register</span></a>
             </nav>
         </aside>
 
-        <!-- The Main Login Box -->
-        <div id="loginBox">
-            <h2 class="welcome">Login</h2>
-            <br>
-            <!-- The Form -->
-            <form id="login-form">
-                <!-- Email Input -->
-                <label class="user-form-labels" for="email-id">Email-ID:</label>
-                <input class="form-input" type="email" name="email" id="email-id" placeholder="Email-ID..." required/>
-                <br>
-                <!-- Password Input -->
-                <label class="user-form-labels" for="password">Password:</label>
-                <input class="form-input" type="password" name="password" id="password" placeholder="Password..." required/>
-                <br><br>
-                <!-- Feedback -->
-                <span class="feedback" id="login-feedback"></span>
-                <br>
-                <!-- Submit Button -->
-                <button class="submit-bt" type="submit" id="loginBtn">Login</button>
-                <br>
-                <button class="guest-submit-bt" type="button">Play as a Guest</button>
-                <br>
-                <p class="change-p"> Don't have an Account?</p>
-                <br>
-                <button class="submit-bt" type="button" id="change-registerBtn">Register</button>
-            </form>
-        </div>
-
-        <!-- The Register Box -->
-        <div id="registerBox">
-            <h2 class="welcome">Register</h2>
-            <br>
-            <!-- The Form -->
-            <form id="register-form">
-                <!-- Nickname input -->
-                <label class="user-form-labels" for="nickname">Nickname:</label>
-                <input class="form-input" type="text" name="nickname" id="nickname" placeholder="Nickname..."/>
-                <br>
-                <!-- Phone Number -->
-                <label class="user-form-labels" for="phone">Phone Number:</label>
-                <input class="form-input" type="tel" name="phone" id="phone" placeholder="Phone Number..."/>
-                <br>
-                <!-- Email Input -->
-                <label class="user-form-labels" for="email">Email-ID:</label>
-                <input class="form-input" type="email" name="email" id="email" placeholder="Email-ID..." required/>
-                <br>
-                <!-- Password Input -->
-                <label class="user-form-labels" for="pass">Password:</label>
-                <input class="form-input" type="password" name="password" id="pass" placeholder="Password..." required/>
-                <br><br>
-                <!-- Feedback -->
-                <span class="feedback" id="register-feedback"></span>
-                <br>
-                <!-- Submit Button -->
-                <button class="submit-bt" type="submit" id="registerBtn">Register</button>
-                <br>
-                <button class="guest-submit-bt" type="button">Play as a Guest</button>
-                <br>
-                <p class="change-p"> Already have an Account?</p>
-                <br>
-                <button class="submit-bt" type="button" id="change-loginBtn">Login</button>
-            </form>
-        </div>
     </div>
-<script type="module" src = "../JS_files/script.js" defer></script>
-<script type="module" src="../JS_files/credentials.js" defer></script>
+    <script type="module" src="JS_files/script.js" defer></script>
 </body>
+
 </html>
