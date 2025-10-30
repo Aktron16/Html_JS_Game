@@ -80,7 +80,7 @@ function OnRegisterClick(){
         setTimeout(() => {
             loginBox.style.display = 'flex';
             registerBox.style.display = 'none';
-        }, 5000);
+        }, 3000);
     } else {
         feedback.textContent = `This User ${user.email} aldready exists...`;
         resetFeedback(3, feedback);

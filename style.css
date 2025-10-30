@@ -9,7 +9,7 @@
   --color-surface: #1A1A1A;      /* dark gray for cards/sections */
   --color-text-black: #000000;   /* black text*/
   --color-text: #FFFFFF;         /* white text for contrast */
-  --color-muted: #C0C0C0;        /* muted gray text */
+  --color-muted: rgba(255, 165, 56, 0.8);        /* Light warm creamy */
 
   /* UI Elements */
   --color-header-bg: var(--color-primary);
@@ -84,7 +84,7 @@ body {
     gap: 15px;
 }
 
-.header-right img {
+.header-bt img {
     position: relative;
     display: inline-block;
     height: 32px;
@@ -328,6 +328,98 @@ body {
     box-shadow: var(--shadow-dark);
 }
 
+/* Index divs */
+.main-content {
+    grid-area: main;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    overflow: auto;
+    color: var(--color-text);
+}
+
+
+.liquid-glass-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 80%;
+    max-width: 1000px;
+    min-height: 500px;
+    padding: 30px;
+    
+
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+
+.logo-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 250px;
+}
+
+.logo-side img {
+    max-width: 100%;
+    height: auto;
+    max-height: 250px;
+}
+
+
+.how-to-play-side {
+    flex: 1.5;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.how-to-play-side h2 {
+    color: var(--color-primary);
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 5px;
+}
+
+.how-to-play-side p {
+    font-size: 1.4rem;
+    font-weight: 1000;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.how-to-play-side p:last-child {
+    margin-bottom: 0;
+}
+
+.how-to-play-side b {
+    color: var(--color-text);
+    font-weight: 1200;
+    background: linear-gradient(
+        90deg,
+        gold,
+        var(--color-primary),
+        white,
+        var(--color-accent),
+        white,
+        var(--color-primary),
+        gold
+    );
+    color: transparent;
+    background-clip: text;
+    background-size: 400% 100%;
+    animation: rainbowFlow 3s linear infinite;
+}
+
 /* SideBar */
 #sidebar {
     grid-area: sidebar;
@@ -353,8 +445,9 @@ body {
     padding-left: 10px;
 }
 
-.sidebar-bt, .sidebar-bt span {
+.nav .sidebar-bt, .sidebar-bt span {
     white-space: nowrap;
+    margin: 5px 0 10px 0;
     display: block;
     width: 90%;
     padding: 5px;

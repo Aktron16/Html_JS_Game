@@ -4,6 +4,8 @@ const overlayBox = document.getElementById("overlayBox");
 const user_nickname = document.getElementById("user-nickname");
 const menuBtn = document.getElementById('menuBtn');
 const avatarBtn = document.getElementById('avatarBtn');
+const leaderboardsBtn = document.getElementById('leaderboardsBtn');
+const leaderboards_link = document.getElementById('leaderboard_link');
 const signoutBt = document.getElementById('signout-bt');
 
 import { user_current as User_Logged_in } from "./module.js";
@@ -21,8 +23,12 @@ function LoggedIn() {
     if (logged) {
         avatarBtn.style.display = 'flex';
         user_nickname.textContent = User_Logged_in._nickname;
+        leaderboardsBtn.style.display = 'inline-block';
+        leaderboards_link.style.display = 'block';
     } else if (!logged) {
         avatarBtn.style.display = 'none';
+        leaderboardsBtn.style.display = 'none';
+        leaderboards_link.style.display = 'none';
     };
 };
 
@@ -39,6 +45,7 @@ function checkLoggedin() {
 };
 
 document.addEventListener('DOMContentLoaded', LoggedIn);
+
 menuBtn.addEventListener('click', ToggleSideBar);
 avatarBtn.addEventListener('click', ToggleSignOutBox);
 signoutBt.addEventListener('click', Signout);
