@@ -36,7 +36,7 @@ function Signout() {
     if (!logged) return;
     if (logged) {
         sessionStorage.removeItem("User_Logged_in");
-        location.reload();
+        window.location.href = '../index.html';
     };
 };
 
